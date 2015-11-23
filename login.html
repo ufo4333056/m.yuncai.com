@@ -1,0 +1,48 @@
+<!doctype html><html lang="en"><head>
+        <meta charset="UTF-8">
+        <title>登录</title>
+        <meta name="viewport" content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0,user-scalable=no">
+        <link rel="stylesheet" href="css/m/common.css">
+        <link rel="stylesheet" href="css/m/login.css">
+    </head>
+    <body>
+    <link rel="stylesheet" href="css/main.css" type="text/css" media="screen">
+<script src="js/common.js?v="></script>
+<header><a href="javascript:history.go(-1);" class="back"></a><h1>登录</h1></header>
+<nav>
+    <ul class="www_nav">
+        <li><a href="/"><i class="nav-0"></i>首页</a></li>
+        <li><a href="/list/main"><i class="nav-1"></i>分类</a></li>
+        <li><a href="/Cookbook"><i class="nav-2"></i>菜谱</a></li>
+        <li><a href="/cart/"><i class="nav-3"></i>购物车<i class="num" id="AppCartNums" style="display: none;">0</i></a></li>
+        <li><a href="/member/"><i class="nav-4"></i>我的见食</a></li>
+    </ul>
+</nav>
+
+    <div class="login-tab line-bottom">
+        <a href="/Login/login.html" class="sel" cbclick="1-2">登录</a><a href="/Login/regMobile.html" cbclick="1-1">注册</a>
+    </div>
+    <div class="login-wrap">
+        <input type="text" placeholder="请输入注册邮箱或注册手机号" name="username">
+        <input type="password" placeholder="请输入密码" name="password">
+        <input type="hidden" name="redirect_url" value="">
+        <a href="/Login/login.html" class="login-btn" onclick="return login(this)">登 录</a>
+        <input type="hidden" name="form_token" value="f2bac8e438f1523f5eeacf3f03a28835">
+        <input type="hidden" name="keep_login" value="1">
+        <p class="login-tip"><a href="/Login/ForgetPwd.html">忘记密码？</a></p>
+    </div>
+    <footer>
+    <div class="footer-tool">
+                    <a href="/Login/index.html" cbclick="1-2">登录</a><span>|</span><a href="/Login/regMobile.html" cbclick="1-1">注册</a><a href="" class="toTop">回到顶部</a>    </div>
+    <a href="#" class="on sel changeSystem" value="1">触屏版</a>|<a href="#" class="changeSystem" value="2">电脑版</a>
+    
+</footer>
+
+<input type="hidden" name="changeSystem" id="changeSystem_url" value="/Base/changeSystem.html">
+<input type="hidden" name="andriod_app_download_version" id="andriod_app_download_version" value="ChunBoMall_1.5.4.apk">
+<script type="text/javascript" src="js/m/common.js?v="></script>
+<script src="js/stats.js?v="></script>
+
+    <script type="text/javascript" src="js/m/login/common.js"></script>
+    
+</body></html>

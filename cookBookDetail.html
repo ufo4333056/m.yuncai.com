@@ -1,0 +1,273 @@
+<!doctype html><html lang="zh-CN"><head>
+        <meta name="viewport" content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0,user-scalable=no">
+        <title>香煎金线鱼 - 见食</title>
+    <meta charset="utf-8">
+        <link rel="stylesheet" href="css/m_common.css">
+        <link rel="stylesheet" href="css/main.css" type="text/css" media="screen">
+        <link rel="stylesheet" href="css/m/caipu-detail.css">
+    <script src="js/common.js"></script></head>
+
+<body class="mobile-cookbook-detail"><header class="category-header">
+    <a href="javascript:{window.history.back();}" class="back"></a><a href="#" class="search-cancel">取消</a><input type="text" class="search" placeholder="搜索见食商品" id="search_key"><a href="javascript:void(0);" class="search-act">搜索</a>
+</header>
+<div class="search-res">
+    <h5>最近搜索</h5>
+    <ul></ul>
+    <p class="del-search-key"><a href="#">删除搜索记录<i class="del">×</i></a></p>
+</div>
+<script>
+    $(function () {
+        //搜索按钮
+        $('#search_key').on('focus',function(){
+            $(this).addClass('search-focus');
+            search.act();
+            search.get();
+        }).on('blur',function(){
+            $(this).removeClass('search-focus');
+        });
+        var search = {
+            'act':function(){
+                $('.search-cancel,.search-res,.search-act').show();
+                $('.back').hide();
+                $('body').addClass('disableScorll');
+                if ($("#category_level").val() > 1) {
+                    $("#filter_div").hide();
+                }
+                $('.search-cancel').on('click',function(e){
+                    e.preventDefault();
+                    $('#search_key').val('');
+                    $('.search-cancel,.search-res,.search-act').hide();
+                    $('.back').show();
+                    $('body').removeClass('disableScorll');
+                    if ($("#category_level").val() > 1) {
+                        $("#filter_div").show();
+                    }
+                });
+            },
+            'word':localStorage.searchWord?localStorage.searchWord.split(",") : [],
+            'set':function(w){
+                if(w){
+                    for (var i = 0; i < this.word.length; i++) {
+                        if(w == this.word[i]){
+                            this.word.splice(i, 1);
+                        }
+                    };
+                    this.word.push(w);
+                    localStorage.searchWord = this.word;
+                    // $('.search').val('');
+                }
+            },
+            'get':function(){
+                var $searchResUl = $('.search-res ul');
+                var num = 6; //显示个数
+                $searchResUl.html('');
+                if(this.word.length > 0){
+                    for (var i = 0; i < this.word.length; i++) {
+                        if(this.word.length < num || this.word.length - i <= num){
+                            $searchResUl.prepend('<li>'+this.word[i]+'</li>')
+                        }
+                    };
+                    $searchResUl.find('li').on('tap',function(){
+                        search.set($(this).text());
+                        goto_search($(this).text());
+                    });
+                }else{
+                    this.empty();
+                }
+            },
+            'del':function(){
+                localStorage.searchWord = [];
+                this.word = [];
+                this.get();
+            },
+            'empty':function(){
+                if(this.word.length == 0){
+                    $('.search-res ul').append('<li class="empty">您还没有搜索记录</li>');
+                    $('.del-search-key').hide();
+                }
+            }
+        }
+        // search.get();
+        $('.search-act').on('tap',function(e){
+            e.preventDefault();
+            goto_search();
+            search.set($('#search_key').val());
+        });
+        $('.del-search-key a').on('tap',function(e){
+            e.preventDefault();
+            search.del();
+        });
+        $('.search-act-icon').on('tap',function(e){
+            e.preventDefault();
+            $('#search_key').show().focus();
+            $('.search-act-icon').hide();
+			$("#site_area").hide();
+            $('.search-cancel').on('tap',function(e){
+                e.preventDefault();
+                $('#search_key').hide();
+                $('.search-act-icon').show();
+				$("#site_area").show();
+            });
+        });
+
+        $("#search_key").on("keydown", function (e) {
+            var curKey = e.which;
+            if (curKey == 13) {
+                search.set($('#search_key').val());
+                // goto_search();
+            }
+        });
+
+        function goto_search(w) {
+            if (w || $("#search_key").val().length > 0) {
+                var search_key = w || $("#search_key").val();
+                location.href = "/Search/index?key=" + search_key;
+            }
+        }
+    });
+</script>
+<nav>
+    <ul class="www_nav">
+        <li><a href="/"><i class="nav-0"></i>首页</a></li>
+        <li><a href="/list/main"><i class="nav-1"></i>分类</a></li>
+        <li><a href="/Cookbook"><i class="nav-2"></i>菜谱</a></li>
+        <li><a href="/cart/"><i class="nav-3"></i>购物车<i class="num" id="AppCartNums">1</i></a></li>
+        <li><a href="/member/"><i class="nav-4"></i>我的见食</a></li>
+    </ul>
+</nav>
+
+    <div class="caipu-digest">
+        <div class="caipu-banner">
+            <div class="detail-img">
+                <div class="img-wraper">
+                    <img src="http://i2.chunboimg.com/group1/M00/03/EF/Cv4IdVYWFTqAN79XAAPaGzrHKME814_530_350.jpg" alt="">
+                </div>
+            </div>
+        </div>        <h1 class="caipu-title">香煎金线鱼</h1>
+        <p class="caipu-intro">这尾浅红色小鱼通体闪着光芒，六根黄色的线自头延伸至鱼尾，在鱼身划出优雅的弧度。由于自身味道鲜美，简单烹饪即可大放异彩，放入锅中香煎，至金黄色翻面，此时已经闻到小鱼诱人香味。</p>
+        <div class="caipu-tag">
+                    </div>
+    </div>
+    <table class="table-info">
+        <colgroup><col width="90">
+        <col width="230">
+        </colgroup><tbody><tr>
+            <td>烹饪难度</td>
+            <td>
+                <i class="icon-level icon-level-hard"></i>
+                <i class="icon-level  "></i>
+                <i class="icon-level "></i>
+                简单            </td>
+        </tr>
+        <tr>
+            <td>准备时间</td>
+            <td>
+                10分钟以内            </td>
+        </tr>
+        <tr>
+            <td>烹饪时间</td>
+            <td>
+                10分钟以内            </td>
+        </tr>
+        <!--
+        <tr>
+            <td>
+                营养信息
+                <p class="list-intro">每100克</p>
+            </td>
+            <td>
+                <ul class="nutri-list">
+                    <li>
+                        <label>卡路里</label>267大卡
+                    </li>
+                    <li>
+                        <label>蛋白质</label>9克
+                    </li>
+                    <li>
+                        <label>碳水化合物</label>23克
+                    </li>
+                    <li>
+                        <label>脂肪</label>17克
+                    </li>
+                </ul>
+            </td>
+        </tr>
+        -->
+    </tbody></table>
+
+    <!-- 菜谱详情 -->
+    <section class="caipu-detail">
+        <div class="caipu-tab line-bottom">
+            <a href="javascript:void(0)" class="sel">烹饪方法</a><a href="javascript:void(0)">烹饪用料</a>
+        </div>
+
+        <!-- 烹饪方式 -->
+        <div class="caipu-tab-con cook-method" style="display:block;">
+            <p><span style="font-size:16px">1.</span><span style="font-size:16px;font-family:宋体">金线鱼洗净，开膛去掉内脏收拾好。</span></p><p><span style="font-size:16px">&nbsp;<img alt="香煎金线鱼 过程图1.jpg" src="http://i0.chunboimg.com/group1/M00/03/F0/Cv4IbFYWFSiAfJwSAAKAkcvDKy4917.jpg" title="1444287784327894.jpg"></span></p><p><span style="font-size:16px">2.</span><span style="font-size:16px;font-family:宋体">锅烧热倒入油，油温七成热时放入收拾好的金线鱼煎至双面金黄色，倒入少许生抽，撒盐即可。</span></p><p><img alt="香煎金线鱼 过程图2.jpg" src="http://i0.chunboimg.com/group1/M00/03/EF/Cv4IdVYWFS-ABGFeAAKea9v4gms226.jpg" title="1444287791975186.jpg"></p><p><img alt="香煎金线鱼 海报图.jpg" src="http://i0.chunboimg.com/group1/M00/03/EF/Cv4IdVYWFTeAcDqRAARxekjgbR0525.jpg" title="1444287799277017.jpg"></p>        </div>
+
+        <!-- 菜谱用料 -->
+        <div class="caipu-tab-con" style="display:none;">
+            <div class="detail-img">
+                <div class="img-wraper">
+                    <img src="http://i3.chunboimg.com/group1/M00/03/F0/Cv4IbFYWFTqATFpzAAIrbFFn52o577_530_350.jpg" alt="">
+                </div>
+            </div>
+            <table class="table-info">
+                <tbody><tr>
+                <td>食用油<span class="amount">50毫升</span></td>
+                        <td>生抽<span class="amount">6毫升</span></td>
+                        </tr><tr><td class="last">盐<span class="amount">3克</span></td>
+                                        </tr>
+            </tbody></table>
+        </div>
+
+    </section>
+
+    <!-- 见食主厨 -->
+    <section class="chief-cook">
+        <h2>- 见食主厨 -</h2>
+        <div class="cook-img">
+            <img src="http://i2.chunboimg.com/group1/M00/00/41/Cv4IbFS3i8eAekeaAADsNqw3dOc306_200_200.jpg" alt="" class="fl_img">
+        </div>
+        <h3>张朝辉</h3>
+        <!-- <p class="skilled">擅长菜系：西餐</p> -->
+        <p class="cook-intro">见食大厨
+他是位厨艺精湛、经验丰富的中餐厨师，曾经在北京丽晶酒店、东方寒舍、东方君悦、香格里拉、凯宾斯基酒店潜心研究制作中餐菜肴，擅长广东菜、创意菜和地方菜；负责多国政要访华期间餐饮；参加“天天饮食”、“食全食美”等电视餐饮节目；参与多位美食工作者制作的美食料理书籍。这次在见食菜谱中制作了诸多精美的家常菜、创意菜，普及中餐的传统制作方法，让您在家做出更加地道的美味中餐。
+</p>
+    </section>
+
+    <!-- 其他食谱 -->
+
+                                        
+
+    
+
+    <script>
+        $(function() {
+            var $tabCons = $('.caipu-tab-con');
+
+            $('.caipu-tab').on('tap', 'a', function(e) {
+                e.preventDefault();
+                if(!$(e.target).hasClass('sel')) {
+                    $(e.target).addClass('sel').siblings('.sel').removeClass('sel');
+                    $tabCons.hide().eq($(e.target).index()).show();
+                }
+            });
+        });
+    </script>
+<footer>
+    <div class="footer-tool">
+        <a href="/Member/index.html">182050...</a><span>|</span><a href="/Login/logout.html">退出</a><a href="" class="toTop">回到顶部</a>
+            </div>
+    <a href="#" class="on sel changeSystem" value="1">触屏版</a>|<a href="#" class="changeSystem" value="2">电脑版</a>
+    
+</footer>
+
+<input type="hidden" name="changeSystem" id="changeSystem_url" value="/Base/changeSystem.html">
+<input type="hidden" name="andriod_app_download_version" id="andriod_app_download_version" value="ChunBoMall_1.5.4.apk">
+<script type="text/javascript" src="js/m/common.js"></script>
+<script src="js/stats.js"></script>
+
+
+
+</body></html>

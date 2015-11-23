@@ -1,0 +1,152 @@
+<!doctype html><html lang="zh"><head>
+        <meta charset="UTF-8">
+        <title>填写订单</title>
+        <meta name="viewport" content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0,user-scalable=no">
+        <meta name="format-detection" content="telephone=no">
+        <link rel="stylesheet" href="css/m/common.css" type="text/css" media="screen">
+        <link rel="stylesheet" href="css/order.css" type="text/css" media="screen">
+        <script src="js/zepto.1.1.4.min.js" type="text/javascript"></script>
+    </head>
+    <body class="body-order body-order-bottomtool body-gray" style="overflow-y: auto;">
+        <link rel="stylesheet" href="css/main.css" type="text/css" media="screen">
+<header><a href="/Cart/index" class="back"></a><h1>填写订单</h1>
+        <a href="javascript:void(0);" onclick="" id="" class="link-right"></a>
+</header>
+
+        <div class="hide"><form method="post" id="sub_form"></form></div>
+        <div class="order-address-tit">
+            配送地址
+        </div>
+        <div class="order-address">
+
+            <!--<notempty name="default_address">-->
+                        <p class="order-address-empty"><i></i>请添加您的收货人信息</p>        </div>
+        <input type="hidden" value="/Cart/index" id="sub_redirect_url">
+<dl class="order-detail">
+    <dt class="product_list">订单1 <span>共1件商品</span></dt>
+    <dd class="product_detail" style="display:none;">
+                    <p>安心优选云南脆皮金桔500g<span><b>×1</b>¥19.90</span></p>            </dd>
+    <dd class="order-detail-foot">
+        <input type="hidden" value="2015-11-13" name="book_date" id="book_date">
+        <input type="hidden" value="W3sicHJvZHVjdF9pZCI6IjU1NjkiLCJza3VfY29kZSI6IjEwMDAyMjAiLCJuYW1lIjoiXHU1Yjg5XHU1ZmMzXHU0ZjE4XHU5MDA5XHU0ZTkxXHU1MzU3XHU4MTA2XHU3NmFlXHU5MWQxXHU2ODU0NTAwZyIsInN1Ym5hbWUiOiJcdTk5OTlcdTc1MWNcdTdmOGVcdTU0NzMgXHU1NGMxXHU4ZDI4XHU0ZmRkXHU5NjljIiwic2hvcnRuYW1lIjoiXHU1Yjg5XHU1ZmMzXHU0ZjE4XHU5MDA5XHU0ZTkxXHU1MzU3XHU4MTA2XHU3NmFlXHU5MWQxXHU2ODU0IiwibWFya2V0X3ByaWNlIjoiMzAuMDAiLCJjaHVuYm9fcHJpY2UiOiIxOS45MCIsInNwZWNpZmljYXRpb25zIjoiNTAwZyIsInVybCI6Imdyb3VwMVwvTTAwXC8wMFwvNURcL0N2NEliRlRLR2RPQVBfUHFBQWJ3OXM5RUlKWTY1OS5qcGciLCJzYWxlVHlwZSI6MSwicXVhbnRpdHkiOjEsImlzX2xpbWl0IjowLCJ3YXJlSWQiOjEsInNhbGVXYXkiOjAsImlzU2hvcnRXYWl0IjowLCJpc19naWZ0IjoyfV0=" name="product_info" class="product_info">
+        <script>var send_date_arr0 = new Array();</script>
+        <i class="icon i-calendar"></i><h6>配送时间<small class="bookDate select_send_date0">2015-11-13（周五）</small></h6><a href="#">修改</a>
+        <select id="select_send_date0" class="new-select" onchange="changeItemDateHandler(this)" style="position: absolute; margin: 7px 0px; height: 5%; left: 90px; opacity: 0; width: 284px;">
+                    <option value="2015-11-13">2015-11-13（周五）</option>
+            <script>send_date_arr0.push("2015-11-13");</script>            <option value="2015-11-14">2015-11-14（周六）</option>
+            <script>send_date_arr0.push("2015-11-14");</script>            <option value="2015-11-15">2015-11-15（周日）</option>
+            <script>send_date_arr0.push("2015-11-15");</script>        </select>
+            </dd></dl>
+<input type="hidden" value="1" class="product_nums_all">
+<input type="hidden" value="19.90" id="product_total_price_all">
+<input type="hidden" value="" id="sub_saleType">
+<input type="hidden" value="" id="sub_is_limit">
+<input type="hidden" value="" id="sub_tag_count">
+<script>
+    $('body').css({overflowY:'auto'});
+    var _width=$(document).width() - 100;
+    $('select.new-select').css({width:_width+'px'});
+    var order_num = 1;
+    function closeWarmTip() {
+        $("#warm-tip").hide();
+    }
+    $(function(){
+            });
+</script>        <div id="chang_product_group" class="hide"></div>
+        <ul class="order-detail">
+            <li id="coupon_list">
+            <a class="common-row-go">
+                                见食券
+                            </a>
+            </li>
+            <li>
+            <span class="use_price_checkbox switch-btn"><i class="switch-spin"></i></span>
+            <input id="chunbo_card" name="chunbo_card" value="" type="hidden">
+            见食卡
+            <span class="text-intro" id="chunbo_card_html">可用0元</span>
+            </li>
+            <li>
+            <span class="use_price_checkbox switch-btn"><i class="switch-spin"></i></span>
+            <input id="points" name="points" value="-1" type="hidden">
+            积分
+            <span class="text-intro" id="points_html">可用0积分，抵0元</span>
+            </li>
+            <li>
+            <span class="use_price_checkbox switch-btn"><i class="switch-spin"></i></span>
+            <input id="balance" name="balance" value="-1" type="hidden">
+            余额
+            <span class="text-intro" id="balance_html">可用0元</span>
+            </li>
+            <li id="invoice">
+            <a class="common-row-go">
+                发票
+                <span class="text-intro" id="invoice_content"></span><span class="invoice-title" id="invoice_title"></span>
+            </a>
+            <div class="invoice-otherinfo">
+                <p id="part_pay" style="display:none;">发票金额会扣除使用积分、见食卡、见食券的部分哦！</p>
+                <p id="full_pay" style="display:none;">抱歉，我们的发票只能提供积分、见食卡、见食券之外的部分，您已全额使用，无法开发票。</p>
+                <i></i>
+            </div>
+            <input type="hidden" name="needInvoice" id="needInvoice" value="0">
+            </li>
+            <li>
+            <span class="show_price_checkbox switch-btn"><i class="switch-spin"></i></span>
+            <input type="hidden" name="is_show_price" id="is_show_price" value="1">
+            请勿在商品清单上打印价格
+            </li>
+            <li class="order-cost-list">
+            <p id="show_total_price"><span id="total_price">￥19.90</span>总商品金额：</p>
+            <p class="hide" id="show_balance_price"><span id="use_balance">-￥5.00</span>余额：</p>
+            <p class="hide" id="show_points_price"><span id="use_points">-￥5.00</span>积分：</p>
+            <p class="hide" id="show_coupons_price" style="display: none;"><span id="use_coupons"></span>见食券：</p>
+            <p class="hide" id="show_chunbo_card_price"><span id="use_chunbo_card">-￥5.00</span>见食卡：</p>
+            </li>
+        </ul>
+        <input type="hidden" value="0" name="old_points" id="old_points">
+        <input type="hidden" value="0" name="old_balance" id="old_balance">
+        <input type="hidden" value="0" name="old_chunbo_card" id="old_chunbo_card">
+        <input type="hidden" value="0" id="sub_is_presale">
+        <input type="hidden" value="19.90" id="sub_total_price">
+        <input type="hidden" value="220325" id="sub_member_id">
+        <input type="hidden" value="http://pay.chunbo.com/mobilePayRequest.html" id="sub_pay_url">
+        <input type="hidden" value="" id="sub_points">
+        <input type="hidden" value="" id="sub_balance">
+        <input type="hidden" value="" id="sub_chunbo_card">
+        <input type="hidden" value="" id="sub_coupons_amount">
+        <input type="hidden" value="" id="sub_coupons_number">
+        <input type="hidden" value="" id="sub_needInvoice">
+        <input type="hidden" value="" id="sub_invoice_title">
+        <input type="hidden" value="" name="invoice_content" id="sub_invoice_content">
+        <input type="hidden" value="" id="pay_pass_val">
+        <input type="hidden" value="" id="wx_token">
+        <script type="text/javascript" src="js/m/order/m_order.js"></script>
+
+        <!-- 固定底部购买栏 -->
+        <div class="buy-fixed">
+            实付金额：<strong class="total-cost" id="pay_money">￥19.90</strong>
+            <a href="javascript:void(0);" onclick="javascript:preSubmitOrder();" id="submitOrder" class="btn-red" cbclick="6-12">提交订单</a> 
+        </div>
+
+        <div class="modal-mask hide"></div>
+        <!-- 支付弹窗 -->
+        <div class="modal-pay hide">
+            <h6>请输入支付密码</h6>
+            <input type="password" name="password" id="pay_password" placeholder="请输入支付密码">
+            <div class="text-link">
+                                <a href="/Member/security">设置支付密码</a>            </div>
+            <p>使用见食卡、余额时需要使用支付密码。</p>
+            <div class="modal-pay-btns">
+                <button class="modal-cancel" onclick="javascript:cancelPayPass();">取消</button>
+                <button class="modal-confirm" onclick="javascript:confirmPayPass();">确定</button>
+            </div>
+        </div>
+        <!-- 支付弹窗结束 -->
+        
+        <!--缺货提醒弹层开始-->
+        <input id="lack_stock" type="hidden" value="">
+        <!--缺货提醒弹层结束-->
+        
+        <script type="text/javascript">Zepto("body").orderIndex({});</script>
+        <script type="text/javascript" src="js/stats.js"></script>
+    
+</body></html>

@@ -1,0 +1,2229 @@
+<!doctype html><html><head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0,user-scalable=no">
+        <title>见食-安心健康食品的购买平台</title>
+        <link rel="stylesheet" href="css/main.css" type="text/css" media="screen">
+    </head>
+    <body class="index">
+
+<!-- 仓位区域选择 -->
+ 
+
+
+<script src="js/common.js"></script>
+<header>
+        <a href="javascript:{window.history.back();}" class="search-cancel">取消</a><a href="/" class="logo">见食</a><input type="text" class="search" placeholder="搜索见食商品" id="search_key"><a href="javascript:void(0);" class="search-act">搜索</a><a href="javascript:void(0);" class="search-act-icon"></a></header>
+<div class="search-res">
+    <h5>最近搜索</h5>
+    <ul></ul>
+    <p class="del-search-key"><a href="#">删除搜索记录<i class="del">×</i></a></p>
+</div>
+<script>
+    $(function () {
+        //搜索按钮
+        $('#search_key').on('focus',function(){
+            $(this).addClass('search-focus');
+            search.act();
+            search.get();
+        }).on('blur',function(){
+            $(this).removeClass('search-focus');
+        });
+        var search = {
+            'act':function(){
+                $('.search-cancel,.search-res,.search-act').show();
+                $('.back').hide();
+                $('body').addClass('disableScorll');
+                if ($("#category_level").val() > 1) {
+                    $("#filter_div").hide();
+                }
+                $('.search-cancel').on('click',function(e){
+                    e.preventDefault();
+                    $('#search_key').val('');
+                    $('.search-cancel,.search-res,.search-act').hide();
+                    $('.back').show();
+                    $('body').removeClass('disableScorll');
+                    if ($("#category_level").val() > 1) {
+                        $("#filter_div").show();
+                    }
+                });
+            },
+            'word':localStorage.searchWord?localStorage.searchWord.split(",") : [],
+            'set':function(w){
+                if(w){
+                    for (var i = 0; i < this.word.length; i++) {
+                        if(w == this.word[i]){
+                            this.word.splice(i, 1);
+                        }
+                    };
+                    this.word.push(w);
+                    localStorage.searchWord = this.word;
+                    // $('.search').val('');
+                }
+            },
+            'get':function(){
+                var $searchResUl = $('.search-res ul');
+                var num = 6; //显示个数
+                $searchResUl.html('');
+                if(this.word.length > 0){
+                    for (var i = 0; i < this.word.length; i++) {
+                        if(this.word.length < num || this.word.length - i <= num){
+                            $searchResUl.prepend('<li>'+this.word[i]+'</li>')
+                        }
+                    };
+                    $searchResUl.find('li').on('tap',function(){
+                        search.set($(this).text());
+                        goto_search($(this).text());
+                    });
+                }else{
+                    this.empty();
+                }
+            },
+            'del':function(){
+                localStorage.searchWord = [];
+                this.word = [];
+                this.get();
+            },
+            'empty':function(){
+                if(this.word.length == 0){
+                    $('.search-res ul').append('<li class="empty">您还没有搜索记录</li>');
+                    $('.del-search-key').hide();
+                }
+            }
+        }
+        // search.get();
+        $('.search-act').on('tap',function(e){
+            e.preventDefault();
+            goto_search();
+            search.set($('#search_key').val());
+        });
+        $('.del-search-key a').on('tap',function(e){
+            e.preventDefault();
+            search.del();
+        });
+        $('.search-act-icon').on('tap',function(e){
+            e.preventDefault();
+            $('#search_key').show().focus();
+            $('.search-act-icon').hide();
+			$("#site_area").hide();
+            $('.search-cancel').on('tap',function(e){
+                e.preventDefault();
+                $('#search_key').hide();
+                $('.search-act-icon').show();
+				$("#site_area").show();
+            });
+        });
+
+        $("#search_key").on("keydown", function (e) {
+            var curKey = e.which;
+            if (curKey == 13) {
+                search.set($('#search_key').val());
+                // goto_search();
+            }
+        });
+
+        function goto_search(w) {
+            if (w || $("#search_key").val().length > 0) {
+                var search_key = w || $("#search_key").val();
+                location.href = "/Search/index?key=" + search_key;
+            }
+        }
+    });
+</script>
+<nav>
+    <ul class="www_nav">
+        <li><a href="/"><i class="nav-0"></i>首页</a></li>
+        <li><a href="/list/main"><i class="nav-1"></i>分类</a></li>
+        <li><a href="/Cookbook"><i class="nav-2"></i>菜谱</a></li>
+        <li><a href="/cart/"><i class="nav-3"></i>购物车<i class="num" id="AppCartNums" style="display: none;">0</i></a></li>
+        <li><a href="/member/"><i class="nav-4"></i>我的见食</a></li>
+    </ul>
+</nav>
+
+<div class="slide" id="J_slider" style="visibility: visible;">
+    <ul class="slide-img" style="width: 2304px;">
+        <li data-index="0" style="width: 384px; left: 0px; transition-duration: 300ms; transform: translate(-384px, 0px) translateZ(0px);"><a href="/Act/1669?pg=index&amp;md=banner1#keyStr=index-lbt-p1#d1"><img src="http://i3.chunboimg.com/group1/M00/04/8E/Cv4IbFZCswSAXXeOAAEGE0Dw5o8510_640_240.jpg" alt=""></a></li><li data-index="1" style="width: 384px; left: -384px; transition-duration: 300ms; transform: translate(-384px, 0px) translateZ(0px);"><a href="/product/12479?pg=index&amp;md=banner2#keyStr=index-lbt-p2#d1"><img src="http://i3.chunboimg.com/group1/M00/04/8C/Cv4IbFZBx4SAVg_oAAIAHC-dxJM390_640_240.jpg" alt=""></a></li><li data-index="2" style="width: 384px; left: -768px; transition-duration: 300ms; transform: translate(-384px, 0px) translateZ(0px);"><a href="/Act/1627?pg=index&amp;md=banner3#keyStr=index-lbt-p3#d1"><img src="http://i3.chunboimg.com/group1/M00/04/88/Cv4IdVZBUDCAKOxSAAEI-5o6gAY652_640_240.jpg" alt=""></a></li><li data-index="3" style="width: 384px; left: -1152px; transition-duration: 300ms; transform: translate(-384px, 0px) translateZ(0px);"><a href="/Act/1613?pg=index&amp;md=banner4#keyStr=index-lbt-p4#d1"><img src="http://i3.chunboimg.com/group1/M00/04/7A/Cv4IbFY7OTKAWT_jAARzw10qlzY281_640_240.jpg" alt=""></a></li><li data-index="4" style="width: 384px; left: -1536px; transition-duration: 300ms; transform: translate(0px, 0px) translateZ(0px);"><a href="/Act/1667?pg=index&amp;md=banner5#keyStr=index-lbt-p5#d1"><img src="http://i2.chunboimg.com/group1/M00/04/8D/Cv4IbFZCjpqACF6AAAFUCI-TxD8952_640_240.jpg" alt=""></a></li><li data-index="5" style="width: 384px; left: -1920px; transition-duration: 0ms; transform: translate(384px, 0px) translateZ(0px);"><a href="/Act/1635?pg=index&amp;md=banner6#keyStr=index-lbt-p6#d1"><img src="http://i2.chunboimg.com/group1/M00/04/85/Cv4IbFZAAgyALwGWAAEEFmUvIuQ247_640_240.jpg" alt=""></a></li>    </ul>
+    <div class="slide-nav dot">
+        <i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class="cur"></i><i class=""></i>    </div>
+</div>
+<ul class="new_hot mb">
+    <li><a href="List/index?is_promotion=1&amp;page=1#keyStr=index-top-hrcx"><i class="i-hot"></i>火热促销</a></li>
+    <li><a href="List/index?order=5&amp;page=1&amp;is_hide_page=0#keyStr=index-top-xpss"><i class="i-new"></i>新品上市</a></li>
+    <li><a href="DailyFood#keyStr=index-top-mrys"><i class="i-diary"></i>每日一食</a></li>
+</ul>
+<!--
+<div class="today mb">
+    <a href=""><img src="" alt=""><i class="more"></i></a>
+</div> -->
+
+<div class="good mb">
+    <h4>好货推荐</h4>
+    <div class="slide" id="J_slider_box" style="visibility: visible;">
+        <ul class="good-list slide-box layer-list2" style="width: 3456px;">
+        <li data-product-id="8711" data-index="0" style="width: 384px; left: 0px; transition-duration: 0ms; transform: translate(0px, 0px) translateZ(0px);">
+                <a href="product/8711#keyStr=index-hhtj-d1"><img src="http://i3.chunboimg.com/group1/M00/01/F0/Cv4IbFWCX-OAJgFFAAfYQx4MFl0324_290_232.jpg" alt="url_m" target="_self"></a>
+                <h5><a href="product/8711#keyStr=index-hhtj-d1" target="_self">法国精制猪肋排</a></h5>
+                <p class="sub">法猪业联盟推荐 安全高品质</p>
+                <p class="sub">1000g</p>
+                <p class="price">
+
+                <em class="promotion promotion_price">¥ 39.9</em>
+                    <span>¥ 58.8</span>                
+                </p>
+                <a cbclick="1-7" href="javascript:void(0)" class="icon i-cart"></a>
+            </li><li data-product-id="11957" data-index="1" style="width: 384px; left: -384px; transition-duration: 0ms; transform: translate(384px, 0px) translateZ(0px);">
+                <a href="product/11957#keyStr=index-hhtj-d2"><img src="http://i3.chunboimg.com/group1/M00/04/1B/Cv4IbFYgz_GAB0lWAAlRz1HSBaY394_290_232.jpg" alt="url_m" target="_self"></a>
+                <h5><a href="product/11957#keyStr=index-hhtj-d2" target="_self">东海野生海捕小黄鱼</a></h5>
+                <p class="sub">野生海捕 原汁原味</p>
+                <p class="sub">1000g</p>
+                <p class="price">
+
+                                    <b class="chunbo chunbo_price">¥ 19.8</b>
+                    
+                </p>
+                <a cbclick="1-7" href="javascript:void(0)" class="icon i-cart"></a>
+            </li><li data-product-id="10905" data-index="2" style="width: 384px; left: -768px; transition-duration: 0ms; transform: translate(384px, 0px) translateZ(0px);">
+                <a href="product/10905#keyStr=index-hhtj-d3"><img src="http://i2.chunboimg.com/group1/M00/02/9A/Cv4IbFW3Pm2AeBqgAAV_nNJFwDg374_290_232.jpg" alt="url_m" target="_self"></a>
+                <h5><a href="product/10905#keyStr=index-hhtj-d3" target="_self">成鹏飞种植张家口土豆</a></h5>
+                <p class="sub">产自张家口怀安 0化肥种植</p>
+                <p class="sub">1000g</p>
+                <p class="price">
+
+                                    <b class="chunbo chunbo_price">¥ 11.9</b>
+                    
+                </p>
+                <a cbclick="1-7" href="javascript:void(0)" class="icon i-cart"></a>
+            </li><li data-product-id="2333" data-index="3" style="width: 384px; left: -1152px; transition-duration: 0ms; transform: translate(384px, 0px) translateZ(0px);">
+                <a href="product/2333#keyStr=index-hhtj-d4"><img src="http://i2.chunboimg.com/group1/M00/00/52/Cv4IbFTFPFqATFhmAAdsB7waEaU194_290_232.jpg" alt="url_m" target="_self"></a>
+                <h5><a href="product/2333#keyStr=index-hhtj-d4" target="_self">安心优选越南红心火龙果</a></h5>
+                <p class="sub">娇艳欲滴 肉质细腻</p>
+                <p class="sub">1-1.2kg</p>
+                <p class="price">
+
+                <em class="promotion promotion_price">¥ 29.9</em>
+                    <span>¥ 49.9</span>                
+                </p>
+                <a cbclick="1-7" href="javascript:void(0)" class="icon i-cart"></a>
+            </li><li data-product-id="8881" data-index="4" style="width: 384px; left: -1536px; transition-duration: 0ms; transform: translate(384px, 0px) translateZ(0px);">
+                <a href="product/8881#keyStr=index-hhtj-d5"><img src="http://i2.chunboimg.com/group1/M00/02/AB/Cv4IdVW7c4iAMAmvAAT4a3JZXjU954_290_232.jpg" alt="url_m" target="_self"></a>
+                <h5><a href="product/8881#keyStr=index-hhtj-d5" target="_self">澳大利亚维纯全脂纯牛奶</a></h5>
+                <p class="sub">富含蛋白质 口味醇厚</p>
+                <p class="sub">1L</p>
+                <p class="price">
+
+                                    <b class="chunbo chunbo_price">¥ 17.9</b>
+                    
+                </p>
+                <a cbclick="1-7" href="javascript:void(0)" class="icon i-cart"></a>
+            </li><li data-product-id="8359" data-index="5" style="width: 384px; left: -1920px; transition-duration: 0ms; transform: translate(384px, 0px) translateZ(0px);">
+                <a href="product/8359#keyStr=index-hhtj-d6"><img src="http://i3.chunboimg.com/group1/M00/01/B8/Cv4IdVVtfZqADdP3AAcNOX3hFoM603_290_232.jpg" alt="url_m" target="_self"></a>
+                <h5><a href="product/8359#keyStr=index-hhtj-d6" target="_self">玛利兹法式手工冰淇淋绿茶</a></h5>
+                <p class="sub">口感细腻 清澈天然</p>
+                <p class="sub">75g*3</p>
+                <p class="price">
+
+                                    <b class="chunbo chunbo_price">¥ 99</b>
+                    
+                </p>
+                <a cbclick="1-7" href="javascript:void(0)" class="icon i-cart"></a>
+            </li><li data-product-id="11365" data-index="6" style="width: 384px; left: -2304px; transition-duration: 0ms; transform: translate(384px, 0px) translateZ(0px);">
+                <a href="product/11365#keyStr=index-hhtj-d7"><img src="http://i2.chunboimg.com/group1/M00/03/25/Cv4IbFXey6uASEpNAAY9nb66xSU543_290_232.jpg" alt="url_m" target="_self"></a>
+                <h5><a href="product/11365#keyStr=index-hhtj-d7" target="_self">果之宝零添加山楂皇</a></h5>
+                <p class="sub">原果原味 大包装更实惠</p>
+                <p class="sub">500g</p>
+                <p class="price">
+
+                <em class="promotion promotion_price">¥ 20</em>
+                    <span>¥ 28</span>                
+                </p>
+                <a cbclick="1-7" href="javascript:void(0)" class="icon i-cart"></a>
+            </li><li data-product-id="8623" data-index="7" style="width: 384px; left: -2688px; transition-duration: 0ms; transform: translate(384px, 0px) translateZ(0px);">
+                <a href="product/8623#keyStr=index-hhtj-d8"><img src="http://i3.chunboimg.com/group1/M00/01/BE/Cv4IdVVvuv6ATWNxAAe6ESQD3Fs075_290_232.jpg" alt="url_m" target="_self"></a>
+                <h5><a href="product/8623#keyStr=index-hhtj-d8" target="_self">马来西亚优佳快熟燕麦片</a></h5>
+                <p class="sub">澳洲麦片 3分钟煮食</p>
+                <p class="sub">250g</p>
+                <p class="price">
+
+                <em class="promotion promotion_price">¥ 9.9</em>
+                    <span>¥ 15.8</span>                
+                </p>
+                <a cbclick="1-7" href="javascript:void(0)" class="icon i-cart"></a>
+            </li><li data-product-id="2113" data-index="8" style="width: 384px; left: -3072px; transition-duration: 0ms; transform: translate(-384px, 0px) translateZ(0px);">
+                <a href="product/2113#keyStr=index-hhtj-d9"><img src="http://i2.chunboimg.com/group1/M00/00/55/Cv4IbFTHVnSAYQmDAAd1YsOaXUM219_290_232.jpg" alt="url_m" target="_self"></a>
+                <h5><a href="product/2113#keyStr=index-hhtj-d9" target="_self">河套牌全麦粉</a></h5>
+                <p class="sub">无增白剂 面筋含量高</p>
+                <p class="sub">5kg</p>
+                <p class="price">
+
+                                    <b class="chunbo chunbo_price">¥ 34</b>
+                    
+                </p>
+                <a cbclick="1-7" href="javascript:void(0)" class="icon i-cart"></a>
+            </li>        </ul>
+        <div class="slide-nav boxdot">
+            <i class="cur"></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i>        </div>
+    </div>
+</div>
+
+<div class="layer">
+    <a href="/List/index?cid=521-0-0#keyStr=index-lc1-A"><h3><span>
+
+    新鲜水果
+    </span></h3>
+    </a>
+    <a href="/product/11489#keyStr=index-lc1-B" class="layer-img"><img src="http://i0.chunboimg.com/group1/M00/04/8E/Cv4IdVZC792Acjx_AAK4UdRaAIo131.jpg" alt=""></a>
+    <ul class="layer-list">
+        <li data-product-id="5569">
+            <!--  -->
+            <a href="product/5569#keyStr=index-lc1-D#d1">
+            <img src="http://i3.chunboimg.com/group1/M00/01/3D/Cv4IdVU_SCqAMZJzAAw1FSQrk9s332_290_232.jpg" alt="url_m">
+            <h6>安心优选云南脆皮金桔</h6></a>
+            <p class="sub">
+            <!-- 赠品 -->
+                                            <!-- 副标题  -->
+                                香甜美味 品质保障            
+                            <!-- 副标题  -->
+                香甜美味 品质保障        
+        
+        
+            </p>
+            <p class="sub">500g</p>
+            <p class="price">
+                                    <b class="chunbo">¥ 19.9</b>
+                                </p>
+            <a cbclick="1-7" href="javascript:void(0)" class="i-cart"></a>
+
+            <div class="item-icon-box">
+                                            </div>
+
+        </li><li data-product-id="12691">
+            <!-- 1 -->
+            <a href="product/12691#keyStr=index-lc1-D#d2">
+            <img src="http://i3.chunboimg.com/group1/M00/04/52/Cv4IbFYwnISAVMltAApmB5hcFzY567_290_232.jpg" alt="url_m">
+            <h6> 见食安心直采莱阳梨</h6></a>
+            <p class="sub">
+            <!-- 赠品 -->
+                                            <!-- 副标题  -->
+                                 闻名四百年好梨 来自正源            
+                            <!-- 副标题  -->
+                 闻名四百年好梨 来自正源        
+        
+        
+            </p>
+            <p class="sub">2.1-2.3kg</p>
+            <p class="price">
+                                    <b class="chunbo">¥ 29</b>
+                                </p>
+            <a cbclick="1-7" href="javascript:void(0)" class="i-cart"></a>
+
+            <div class="item-icon-box">
+                                            </div>
+
+        </li><li data-product-id="11945">
+            <!-- 2 -->
+            <a href="product/11945#keyStr=index-lc1-D#d3">
+            <img src="http://i3.chunboimg.com/group1/M00/03/A9/Cv4IbFYA_neAYaEtAAqxl_gvBMQ110_290_232.jpg" alt="url_m">
+            <h6>安心优选新西兰甜橙</h6></a>
+            <p class="sub">
+            <!-- 赠品 -->
+                                            <!-- 副标题  -->
+                                果肉细腻 酸甜多汁            
+                            <!-- 副标题  -->
+                果肉细腻 酸甜多汁        
+        
+        
+            </p>
+            <p class="sub">16个装</p>
+            <p class="price">
+                <em class="promotion">¥ 59</em>
+                    <span>¥ 95</span>                            </p>
+            <a cbclick="1-7" href="javascript:void(0)" class="i-cart"></a>
+
+            <div class="item-icon-box">
+                <i class="icon i-xsqg"></i>                            </div>
+
+        </li><li data-product-id="12063">
+            <!-- 3 -->
+            <a href="product/12063#keyStr=index-lc1-D#d4">
+            <img src="http://i2.chunboimg.com/group1/M00/04/3A/Cv4IdVYqQ2aAcZeyAAfOiWT7w4M452_290_232.jpg" alt="url_m">
+            <h6>见食安心直采琯溪红心蜜柚</h6></a>
+            <p class="sub">
+            <!-- 赠品 -->
+                                            <!-- 副标题  -->
+                                到源头 吃到真的吃到好的            
+                            <!-- 副标题  -->
+                到源头 吃到真的吃到好的        
+        
+        
+            </p>
+            <p class="sub">3kg以上</p>
+            <p class="price">
+                                    <b class="chunbo">¥ 29.9</b>
+                                </p>
+            <a cbclick="1-7" href="javascript:void(0)" class="i-cart"></a>
+
+            <div class="item-icon-box">
+                                            </div>
+
+        </li><li data-product-id="12809">
+            <!-- 4 -->
+            <a href="product/12809#keyStr=index-lc1-D#d5">
+            <img src="http://i3.chunboimg.com/group1/M00/04/8F/Cv4IbFZDCFyAcxb5AAk39rjKeGg549_290_232.jpg" alt="url_m">
+            <h6>安心优选广西翠皮金桔</h6></a>
+            <p class="sub">
+            <!-- 赠品 -->
+                                            <!-- 副标题  -->
+                                皮脆肉甜 无刺激感            
+                            <!-- 副标题  -->
+                皮脆肉甜 无刺激感        
+        
+        
+            </p>
+            <p class="sub">500g</p>
+            <p class="price">
+                                    <b class="chunbo">¥ 19.9</b>
+                                </p>
+            <a cbclick="1-7" href="javascript:void(0)" class="i-cart"></a>
+
+            <div class="item-icon-box">
+                                            </div>
+
+        </li><li data-product-id="5779">
+            <!-- 5 -->
+            <a href="product/5779#keyStr=index-lc1-D#d6">
+            <img src="http://i2.chunboimg.com/group1/M00/00/FE/Cv4IdVUmJbeAJeikAAsTWG1pDfU867_290_232.jpg" alt="url_m">
+            <h6>安心优选墨西哥牛油果</h6></a>
+            <p class="sub">
+            <!-- 赠品 -->
+                                            <!-- 副标题  -->
+                                牛油果黄金产区直接空运            
+                            <!-- 副标题  -->
+                牛油果黄金产区直接空运        
+        
+        
+            </p>
+            <p class="sub">8个装</p>
+            <p class="price">
+                <em class="promotion">¥ 55</em>
+                    <span>¥ 99</span>                            </p>
+            <a cbclick="1-7" href="javascript:void(0)" class="i-cart"></a>
+
+            <div class="item-icon-box">
+                <i class="icon i-xsqg"></i>                            </div>
+
+        </li><li data-product-id="7871">
+            <!-- 6 -->
+            <a href="product/7871#keyStr=index-lc1-D#d7">
+            <img src="http://i3.chunboimg.com/group1/M00/01/73/Cv4IdVVTLSeAGcScAAmL3iXyojk116_290_232.jpg" alt="url_m">
+            <h6>见食安心直采库尔勒香梨</h6></a>
+            <p class="sub">
+            <!-- 赠品 -->
+                                            <!-- 副标题  -->
+                                产自孔雀河畔的正宗香梨            
+                            <!-- 副标题  -->
+                产自孔雀河畔的正宗香梨        
+        
+        
+            </p>
+            <p class="sub">2kg</p>
+            <p class="price">
+                                    <b class="chunbo">¥ 19.9</b>
+                                </p>
+            <a cbclick="1-7" href="javascript:void(0)" class="i-cart"></a>
+
+            <div class="item-icon-box">
+                                            </div>
+
+        </li>        <!-- 0 -->
+        <li class="more" style="background-color: #ffe0d4;margin-left:0px;">
+            <a href="/List/index?cid=521-0-0#keyStr=index-lc1-E"><img src="http://i1.chunboimg.com/group1/M00/00/EB/Cv4IdVUeZ8-AZA5TAACNDh2q3O8834.jpg"></a>
+                    </li>
+    </ul>
+</div><div class="layer">
+    <a href="/List/index?cid=663-0-0#keyStr=index-lc2-A"><h3><span>
+
+    安心蔬菜
+    </span></h3>
+    </a>
+    <a href="/product/11907#keyStr=index-lc2-B" class="layer-img"><img src="http://i0.chunboimg.com/group1/M00/04/85/Cv4IdVZAc36AUOODAAIynlENlWg824.jpg" alt=""></a>
+    <ul class="layer-list">
+        <li data-product-id="3009">
+            <!-- 0 -->
+            <a href="product/3009#keyStr=index-lc2-D#d1">
+            <img src="http://i3.chunboimg.com/group1/M00/03/96/Cv4IdVX71P2AKsBUAAa3p1tmJcg665_290_232.jpg" alt="url_m">
+            <h6>见食农庄有机栽培小白菜</h6></a>
+            <p class="sub">
+            <!-- 赠品 -->
+                                            <!-- 副标题  -->
+                                不用化肥农药 清水冲洗即可            
+                            <!-- 副标题  -->
+                不用化肥农药 清水冲洗即可        
+        
+        
+            </p>
+            <p class="sub">300g</p>
+            <p class="price">
+                <em class="promotion">¥ 9.9</em>
+                    <span>¥ 10.8</span>                            </p>
+            <a cbclick="1-7" href="javascript:void(0)" class="i-cart"></a>
+
+            <div class="item-icon-box">
+                <i class="icon i-xsqg"></i>                            </div>
+
+        </li><li data-product-id="11461">
+            <!-- 1 -->
+            <a href="product/11461#keyStr=index-lc2-D#d2">
+            <img src="http://i2.chunboimg.com/group1/M00/04/14/Cv4IdVYgVcCANPMkAAkBWDR8zrc686_290_232.jpg" alt="url_m">
+            <h6>见食安心直采西兰花</h6></a>
+            <p class="sub">
+            <!-- 赠品 -->
+                                            <!-- 副标题  -->
+                                花蕾圆润饱满 苍翠欲滴            
+                            <!-- 副标题  -->
+                花蕾圆润饱满 苍翠欲滴        
+        
+        
+            </p>
+            <p class="sub">350g</p>
+            <p class="price">
+                                    <b class="chunbo">¥ 9.8</b>
+                                </p>
+            <a cbclick="1-7" href="javascript:void(0)" class="i-cart"></a>
+
+            <div class="item-icon-box">
+                                            </div>
+
+        </li><li data-product-id="7557">
+            <!-- 2 -->
+            <a href="product/7557#keyStr=index-lc2-D#d3">
+            <img src="http://i3.chunboimg.com/group1/M00/01/29/Cv4IdVU3EfyAUEmfAAk6WgdKiOk630_290_232.jpg" alt="url_m">
+            <h6>陶争荣种植青浦有机茭白</h6></a>
+            <p class="sub">
+            <!-- 赠品 -->
+                                            <!-- 副标题  -->
+                                0农药种植 生吃口感清甜            
+                            <!-- 副标题  -->
+                0农药种植 生吃口感清甜        
+        
+        
+            </p>
+            <p class="sub">400g</p>
+            <p class="price">
+                <em class="promotion">¥ 13.8</em>
+                    <span>¥ 16.8</span>                            </p>
+            <a cbclick="1-7" href="javascript:void(0)" class="i-cart"></a>
+
+            <div class="item-icon-box">
+                <i class="icon i-xsqg"></i>                            </div>
+
+        </li><li data-product-id="12119">
+            <!-- 3 -->
+            <a href="product/12119#keyStr=index-lc2-D#d4">
+            <img src="http://i3.chunboimg.com/group1/M00/04/2E/Cv4IdVYnbOaAZzn-AAkAct0JfWc377_290_232.jpg" alt="url_m">
+            <h6>成鹏飞种植一墩青土豆</h6></a>
+            <p class="sub">
+            <!-- 赠品 -->
+                                            <!-- 副标题  -->
+                                产自张家口怀安 0化肥种植            
+                            <!-- 副标题  -->
+                产自张家口怀安 0化肥种植        
+        
+        
+            </p>
+            <p class="sub">1000g</p>
+            <p class="price">
+                                    <b class="chunbo">¥ 11.9</b>
+                                </p>
+            <a cbclick="1-7" href="javascript:void(0)" class="i-cart"></a>
+
+            <div class="item-icon-box">
+                                            </div>
+
+        </li><li data-product-id="12077">
+            <!-- 4 -->
+            <a href="product/12077#keyStr=index-lc2-D#d5">
+            <img src="http://i3.chunboimg.com/group1/M00/04/02/Cv4IdVYbgCeAc2eGAAi5ImYI-xM051_290_232.jpg" alt="url_m">
+            <h6>见食安心直采新鲜古树油栗</h6></a>
+            <p class="sub">
+            <!-- 赠品 -->
+                                            <!-- 副标题  -->
+                                产自野生百年古树 栗香浓            
+                            <!-- 副标题  -->
+                产自野生百年古树 栗香浓        
+        
+        
+            </p>
+            <p class="sub">500g</p>
+            <p class="price">
+                                    <b class="chunbo">¥ 19.8</b>
+                                </p>
+            <a cbclick="1-7" href="javascript:void(0)" class="i-cart"></a>
+
+            <div class="item-icon-box">
+                                            </div>
+
+        </li><li data-product-id="12223">
+            <!-- 5 -->
+            <a href="product/12223#keyStr=index-lc2-D#d6">
+            <img src="http://i2.chunboimg.com/group1/M00/04/31/Cv4IdVYow2qAIKGGAAgjrLpNjYE282_290_232.jpg" alt="url_m">
+            <h6>叶乃新种植荔浦芋头</h6></a>
+            <p class="sub">
+            <!-- 赠品 -->
+                                            <!-- 副标题  -->
+                                荔浦原产地直采 细腻粉糯            
+                            <!-- 副标题  -->
+                荔浦原产地直采 细腻粉糯        
+        
+        
+            </p>
+            <p class="sub">750-1000g</p>
+            <p class="price">
+                <em class="promotion">¥ 13.8</em>
+                    <span>¥ 15.8</span>                            </p>
+            <a cbclick="1-7" href="javascript:void(0)" class="i-cart"></a>
+
+            <div class="item-icon-box">
+                <i class="icon i-xsqg"></i>                            </div>
+
+        </li><li data-product-id="11211">
+            <!-- 6 -->
+            <a href="product/11211#keyStr=index-lc2-D#d7">
+            <img src="http://i2.chunboimg.com/group1/M00/02/D9/Cv4IbFXJnAmAFYCaAAkhqnaNi7A976_290_232.jpg" alt="url_m">
+            <h6>见食安心直采垆土铁棍山药</h6></a>
+            <p class="sub">
+            <!-- 赠品 -->
+                                            <!-- 副标题  -->
+                                孕于垆土 软糯香甜            
+                            <!-- 副标题  -->
+                孕于垆土 软糯香甜        
+        
+        
+            </p>
+            <p class="sub">450-550g</p>
+            <p class="price">
+                                    <b class="chunbo">¥ 19.8</b>
+                                </p>
+            <a cbclick="1-7" href="javascript:void(0)" class="i-cart"></a>
+
+            <div class="item-icon-box">
+                                            </div>
+
+        </li>        <!-- 0 -->
+        <li class="more" style="background-color: #e8f6df       ;margin-left:0px;">
+            <a href="/List/index?cid=663-0-0#keyStr=index-lc2-E"><img src="http://i1.chunboimg.com/group1/M00/00/EB/Cv4IdVUeZ6aALTpvAAC1_zD7xu0446.jpg"></a>
+                    </li>
+    </ul>
+</div><div class="layer">
+    <a href="/List/index?cid=817-0-0#keyStr=index-lc3-A"><h3><span>
+
+    水产海鲜
+    </span></h3>
+    </a>
+    <a href="/Act/1607#keyStr=index-lc3-B" class="layer-img"><img src="http://i0.chunboimg.com/group1/M00/04/8A/Cv4IdVZBxcuARQKIAAOZqot5W4M434.jpg" alt=""></a>
+    <ul class="layer-list">
+        <li data-product-id="11329">
+            <!-- 0 -->
+            <a href="product/11329#keyStr=index-lc3-D#d1">
+            <img src="http://i3.chunboimg.com/group1/M00/03/87/Cv4IbFX3x_yAEOugAAhCdk2lwss959_290_232.jpg" alt="url_m">
+            <h6>见食直采正宗阳澄湖大闸蟹</h6></a>
+            <p class="sub">
+            <!-- 赠品 -->
+                                            <!-- 副标题  -->
+                                母蟹膏满盈 公蟹肉多喷香            
+                            <!-- 副标题  -->
+                母蟹膏满盈 公蟹肉多喷香        
+        
+        
+            </p>
+            <p class="sub">6只装</p>
+            <p class="price">
+                                    <b class="chunbo">¥ 238</b>
+                                </p>
+            <a cbclick="1-7" href="javascript:void(0)" class="i-cart"></a>
+
+            <div class="item-icon-box">
+                                            </div>
+
+        </li><li data-product-id="11651">
+            <!-- 1 -->
+            <a href="product/11651#keyStr=index-lc3-D#d2">
+            <img src="http://i3.chunboimg.com/group1/M00/03/5F/Cv4IbFXuhvmAD8qFAApnb_UN2WM378_290_232.jpg" alt="url_m">
+            <h6>见食大连野生冰鲜皮皮虾</h6></a>
+            <p class="sub">
+            <!-- 赠品 -->
+                                            <!-- 副标题  -->
+                                足斤足两 个大肉多滋味鲜             
+                            <!-- 副标题  -->
+                足斤足两 个大肉多滋味鲜         
+        
+        
+            </p>
+            <p class="sub">500g</p>
+            <p class="price">
+                                    <b class="chunbo">¥ 66</b>
+                                </p>
+            <a cbclick="1-7" href="javascript:void(0)" class="i-cart"></a>
+
+            <div class="item-icon-box">
+                                            </div>
+
+        </li><li data-product-id="2603">
+            <!-- 2 -->
+            <a href="product/2603#keyStr=index-lc3-D#d3">
+            <img src="http://i3.chunboimg.com/group1/M00/01/5F/Cv4IdVVMTc2ANtDvAAOuQt8fupw394_290_232.jpg" alt="url_m">
+            <h6>见食挪威冰鲜三文鱼刺身</h6></a>
+            <p class="sub">
+            <!-- 赠品 -->
+                                            <!-- 副标题  -->
+                                附赠安心芥末、酱油             
+                            <!-- 副标题  -->
+                附赠安心芥末、酱油         
+        
+        
+            </p>
+            <p class="sub">300g</p>
+            <p class="price">
+                <em class="promotion">¥ 68</em>
+                    <span>¥ 78</span>                            </p>
+            <a cbclick="1-7" href="javascript:void(0)" class="i-cart"></a>
+
+            <div class="item-icon-box">
+                <i class="icon i-xsqg"></i>                            </div>
+
+        </li><li data-product-id="8335">
+            <!-- 3 -->
+            <a href="product/8335#keyStr=index-lc3-D#d4">
+            <img src="http://i2.chunboimg.com/group1/M00/02/04/Cv4IdVWKiFmAI8QdAAK0ITr9Dg4210_290_232.jpg" alt="url_m">
+            <h6>见食活水产产地直运活花蛤</h6></a>
+            <p class="sub">
+            <!-- 赠品 -->
+                                            <!-- 副标题  -->
+                                鲜活到家 滋味鲜香馋人            
+                            <!-- 副标题  -->
+                鲜活到家 滋味鲜香馋人        
+        
+        
+            </p>
+            <p class="sub">1000g</p>
+            <p class="price">
+                                    <b class="chunbo">¥ 25</b>
+                                </p>
+            <a cbclick="1-7" href="javascript:void(0)" class="i-cart"></a>
+
+            <div class="item-icon-box">
+                                            </div>
+
+        </li><li data-product-id="11749">
+            <!-- 4 -->
+            <a href="product/11749#keyStr=index-lc3-D#d5">
+            <img src="http://i3.chunboimg.com/group1/M00/03/6A/Cv4IdVXw-WWAW-6aAAKzWjJFcC4589_290_232.jpg" alt="url_m">
+            <h6>东海野生海捕带鱼段</h6></a>
+            <p class="sub">
+            <!-- 赠品 -->
+                                            <!-- 副标题  -->
+                                骨少肉肥 肉质新鲜滑嫩             
+                            <!-- 副标题  -->
+                骨少肉肥 肉质新鲜滑嫩         
+        
+        
+            </p>
+            <p class="sub">1000g</p>
+            <p class="price">
+                <em class="promotion">¥ 59</em>
+                    <span>¥ 66</span>                            </p>
+            <a cbclick="1-7" href="javascript:void(0)" class="i-cart"></a>
+
+            <div class="item-icon-box">
+                <i class="icon i-xsqg"></i>                            </div>
+
+        </li><li data-product-id="11957">
+            <!-- 5 -->
+            <a href="product/11957#keyStr=index-lc3-D#d6">
+            <img src="http://i3.chunboimg.com/group1/M00/04/1B/Cv4IbFYgz-mAbQx8AAuwvjH4BnM300_290_232.jpg" alt="url_m">
+            <h6>东海野生海捕小黄鱼</h6></a>
+            <p class="sub">
+            <!-- 赠品 -->
+                                            <!-- 副标题  -->
+                                野生海捕 原汁原味             
+                            <!-- 副标题  -->
+                野生海捕 原汁原味         
+        
+        
+            </p>
+            <p class="sub">1000g</p>
+            <p class="price">
+                                    <b class="chunbo">¥ 19.8</b>
+                                </p>
+            <a cbclick="1-7" href="javascript:void(0)" class="i-cart"></a>
+
+            <div class="item-icon-box">
+                                            </div>
+
+        </li><li data-product-id="2571">
+            <!-- 6 -->
+            <a href="product/2571#keyStr=index-lc3-D#d7">
+            <img src="http://i3.chunboimg.com/group1/M00/01/14/Cv4IdVUvljOAK-VpAAqOnDHMNko265_290_232.jpg" alt="url_m">
+            <h6>野生海捕船冻阿根廷红虾仁</h6></a>
+            <p class="sub">
+            <!-- 赠品 -->
+                                            <!-- 副标题  -->
+                                个大Q弹鲜嫩 宝宝爱吃            
+                            <!-- 副标题  -->
+                个大Q弹鲜嫩 宝宝爱吃        
+        
+        
+            </p>
+            <p class="sub">350g</p>
+            <p class="price">
+                <em class="promotion">¥ 49.9</em>
+                    <span>¥ 78</span>                            </p>
+            <a cbclick="1-7" href="javascript:void(0)" class="i-cart"></a>
+
+            <div class="item-icon-box">
+                <i class="icon i-xsqg"></i>                            </div>
+
+        </li>        <!-- 0 -->
+        <li class="more" style="background-color: #e1f2ff;margin-left:0px;">
+            <a href="/List/index?cid=817-0-0#keyStr=index-lc3-E"><img src="http://i1.chunboimg.com/group1/M00/00/EB/Cv4IdVUeaiKAcDPGAACAQ9frjgo187.jpg"></a>
+                    </li>
+    </ul>
+</div><div class="layer">
+    <a href="/List/index?cid=51-0-0#keyStr=index-lc4-A"><h3><span>
+
+    肉禽蛋品
+    </span></h3>
+    </a>
+    <a href="/Act/1035#keyStr=index-lc4-B" class="layer-img"><img src="http://i0.chunboimg.com/group1/M00/04/86/Cv4IbFZAOYqATdz_AAOXcsNHdFQ116.jpg" alt=""></a>
+    <ul class="layer-list">
+        <li data-product-id="2859">
+            <!-- 0 -->
+            <a href="product/2859#keyStr=index-lc4-D#d1">
+            <img src="http://i2.chunboimg.com/group1/M00/01/A0/Cv4IdVVkIT-ACsblAAriJ4rfDyo694_290_232.jpg" alt="url_m">
+            <h6>幸福猪（白猪）瘦肉馅</h6></a>
+            <p class="sub">
+            <!-- 赠品 -->
+                                            <!-- 副标题  -->
+                                可口馅食的精致之选            
+                            <!-- 副标题  -->
+                可口馅食的精致之选        
+        
+        
+            </p>
+            <p class="sub">500g</p>
+            <p class="price">
+                                    <b class="chunbo">¥ 17.8</b>
+                                </p>
+            <a cbclick="1-7" href="javascript:void(0)" class="i-cart"></a>
+
+            <div class="item-icon-box">
+                                            </div>
+
+        </li><li data-product-id="8481">
+            <!-- 1 -->
+            <a href="product/8481#keyStr=index-lc4-D#d2">
+            <img src="http://i2.chunboimg.com/group1/M00/01/C0/Cv4IbFVwE5KAR3GKAAxoC_B5iQI914_290_232.jpg" alt="url_m">
+            <h6>见食安心直采密云柴鸡蛋</h6></a>
+            <p class="sub">
+            <!-- 赠品 -->
+                                            <!-- 副标题  -->
+                                自然产蛋 安全放心            
+                            <!-- 副标题  -->
+                自然产蛋 安全放心        
+        
+        
+            </p>
+            <p class="sub">12枚</p>
+            <p class="price">
+                <em class="promotion">¥ 15.6</em>
+                    <span>¥ 21.8</span>                            </p>
+            <a cbclick="1-7" href="javascript:void(0)" class="i-cart"></a>
+
+            <div class="item-icon-box">
+                <i class="icon i-xsqg"></i>                            </div>
+
+        </li><li data-product-id="9177">
+            <!-- 2 -->
+            <a href="product/9177#keyStr=index-lc4-D#d3">
+            <img src="http://i2.chunboimg.com/group1/M00/04/6D/Cv4IdVY4bXWAP3rTAAoi9VxIWQ0299_290_232.jpg" alt="url_m">
+            <h6>澳洲天然牧场牛肉块</h6></a>
+            <p class="sub">
+            <!-- 赠品 -->
+                                            <!-- 副标题  -->
+                                汁水充足 肉香四溢            
+                            <!-- 副标题  -->
+                汁水充足 肉香四溢        
+        
+        
+            </p>
+            <p class="sub">1000g</p>
+            <p class="price">
+                                    <b class="chunbo">¥ 75.8</b>
+                                </p>
+            <a cbclick="1-7" href="javascript:void(0)" class="i-cart"></a>
+
+            <div class="item-icon-box">
+                                            </div>
+
+        </li><li data-product-id="11169">
+            <!-- 3 -->
+            <a href="product/11169#keyStr=index-lc4-D#d4">
+            <img src="http://i3.chunboimg.com/group1/M00/04/45/Cv4IdVYtx1iAIDYLAArIHwqUGzU803_290_232.jpg" alt="url_m">
+            <h6>锡林郭勒精品羔羊羊肉串</h6></a>
+            <p class="sub">
+            <!-- 赠品 -->
+                                            <!-- 副标题  -->
+                                肉多量足 每袋内含18-20串            
+                            <!-- 副标题  -->
+                肉多量足 每袋内含18-20串        
+        
+        
+            </p>
+            <p class="sub">500g</p>
+            <p class="price">
+                                    <b class="chunbo">¥ 75.8</b>
+                                </p>
+            <a cbclick="1-7" href="javascript:void(0)" class="i-cart"></a>
+
+            <div class="item-icon-box">
+                                            </div>
+
+        </li><li data-product-id="8855">
+            <!-- 4 -->
+            <a href="product/8855#keyStr=index-lc4-D#d5">
+            <img src="http://i3.chunboimg.com/group1/M00/02/0C/Cv4IbFWNGYiANGvLAAq69yBOXrg435_290_232.jpg" alt="url_m">
+            <h6>上海圣华散养香川黑凤鸡</h6></a>
+            <p class="sub">
+            <!-- 赠品 -->
+                                            <!-- 副标题  -->
+                                滋补佳品 营养好美味            
+                            <!-- 副标题  -->
+                滋补佳品 营养好美味        
+        
+        
+            </p>
+            <p class="sub">600g</p>
+            <p class="price">
+                                    <b class="chunbo">¥ 88</b>
+                                </p>
+            <a cbclick="1-7" href="javascript:void(0)" class="i-cart"></a>
+
+            <div class="item-icon-box">
+                                            </div>
+
+        </li><li data-product-id="10937">
+            <!-- 5 -->
+            <a href="product/10937#keyStr=index-lc4-D#d6">
+            <img src="http://i2.chunboimg.com/group1/M00/02/D3/Cv4IdVXIHOGAffluAAmq-ZCuZZ8428_290_232.jpg" alt="url_m">
+            <h6>上海圣华三黄鸡翅中</h6></a>
+            <p class="sub">
+            <!-- 赠品 -->
+                                            <!-- 副标题  -->
+                                肉厚醇香 翅中佳品            
+                            <!-- 副标题  -->
+                肉厚醇香 翅中佳品        
+        
+        
+            </p>
+            <p class="sub">500g</p>
+            <p class="price">
+                                    <b class="chunbo">¥ 41.8</b>
+                                </p>
+            <a cbclick="1-7" href="javascript:void(0)" class="i-cart"></a>
+
+            <div class="item-icon-box">
+                                            </div>
+
+        </li><li data-product-id="2895">
+            <!-- 6 -->
+            <a href="product/2895#keyStr=index-lc4-D#d7">
+            <img src="http://i2.chunboimg.com/group1/M00/01/A0/Cv4IdVVkIx-ADiatAAzvaQijsdo638_290_232.jpg" alt="url_m">
+            <h6>阿妈牧场有机带皮猪后腿肉</h6></a>
+            <p class="sub">
+            <!-- 赠品 -->
+                                            <!-- 副标题  -->
+                                肥瘦相连 香而不腻            
+                            <!-- 副标题  -->
+                肥瘦相连 香而不腻        
+        
+        
+            </p>
+            <p class="sub">300g</p>
+            <p class="price">
+                <em class="promotion">¥ 21.8</em>
+                    <span>¥ 31.8</span>                            </p>
+            <a cbclick="1-7" href="javascript:void(0)" class="i-cart"></a>
+
+            <div class="item-icon-box">
+                <i class="icon i-xsqg"></i>                            </div>
+
+        </li>        <!-- 0 -->
+        <li class="more" style="background-color: #ffe8c0;margin-left:0px;">
+            <a href="/List/index?cid=51-0-0#keyStr=index-lc4-E"><img src="http://i1.chunboimg.com/group1/M00/00/EB/Cv4IdVUealKAOQtIAACJmEXWGU0163.jpg"></a>
+                    </li>
+    </ul>
+</div><div class="layer">
+    <a href="/List/index?cid=122-0-0#keyStr=index-lc5-A"><h3><span>
+
+    安心乳品.果汁.水
+    </span></h3>
+    </a>
+    <a href="/product/7427#keyStr=index-lc5-B" class="layer-img"><img src="http://i1.chunboimg.com/group1/M00/04/8C/Cv4IdVZCl06AM1TWAAK7erhaBUg354.jpg" alt=""></a>
+    <ul class="layer-list">
+        <li data-product-id="5227">
+            <!-- 0 -->
+            <a href="product/5227#keyStr=index-lc5-D#d1">
+            <img src="http://i3.chunboimg.com/group1/M00/01/0D/Cv4IdVUs14eAQKtIAATNgaShNK4759_290_232.jpg" alt="url_m">
+            <h6>雪原兰格格蒙古族酸奶</h6></a>
+            <p class="sub">
+            <!-- 赠品 -->
+                                            <!-- 副标题  -->
+                                新鲜牧场奶源 口感香醇            
+                            <!-- 副标题  -->
+                新鲜牧场奶源 口感香醇        
+        
+        
+            </p>
+            <p class="sub">200g</p>
+            <p class="price">
+                                    <b class="chunbo">¥ 9.8</b>
+                                </p>
+            <a cbclick="1-7" href="javascript:void(0)" class="i-cart"></a>
+
+            <div class="item-icon-box">
+                                            </div>
+
+        </li><li data-product-id="6329">
+            <!-- 1 -->
+            <a href="product/6329#keyStr=index-lc5-D#d2">
+            <img src="http://i2.chunboimg.com/group1/M00/01/72/Cv4IbFVTBEWAcFvjAAfdjf3cY0o579_290_232.jpg" alt="url_m">
+            <h6>和润丹麦式酸奶</h6></a>
+            <p class="sub">
+            <!-- 赠品 -->
+                                            <!-- 副标题  -->
+                                奶香浓郁 香醇滋味            
+                            <!-- 副标题  -->
+                奶香浓郁 香醇滋味        
+        
+        
+            </p>
+            <p class="sub">1.05kg</p>
+            <p class="price">
+                <em class="promotion">¥ 28.6</em>
+                    <span>¥ 31.8</span>                            </p>
+            <a cbclick="1-7" href="javascript:void(0)" class="i-cart"></a>
+
+            <div class="item-icon-box">
+                <i class="icon i-xsqg"></i>                            </div>
+
+        </li><li data-product-id="6247">
+            <!-- 2 -->
+            <a href="product/6247#keyStr=index-lc5-D#d3">
+            <img src="http://i2.chunboimg.com/group1/M00/03/5B/Cv4IbFXs9LaAWpAaAAg08_bo9CA281_290_232.jpg" alt="url_m">
+            <h6>新西兰安佳纯正黄油</h6></a>
+            <p class="sub">
+            <!-- 赠品 -->
+                                            <!-- 副标题  -->
+                                新鲜奶油 新西兰风味            
+                            <!-- 副标题  -->
+                新鲜奶油 新西兰风味        
+        
+        
+            </p>
+            <p class="sub">227g</p>
+            <p class="price">
+                                    <b class="chunbo">¥ 30.9</b>
+                                </p>
+            <a cbclick="1-7" href="javascript:void(0)" class="i-cart"></a>
+
+            <div class="item-icon-box">
+                                            </div>
+
+        </li><li data-product-id="12413">
+            <!-- 3 -->
+            <a href="product/12413#keyStr=index-lc5-D#d4">
+            <img src="http://i3.chunboimg.com/group1/M00/04/56/Cv4IbFYxtrSANZhBAAiAApvve-o940_290_232.jpg" alt="url_m">
+            <h6>澳大利亚德运全脂纯牛奶</h6></a>
+            <p class="sub">
+            <!-- 赠品 -->
+                                            <!-- 副标题  -->
+                                10盒装 限时特价            
+                            <!-- 副标题  -->
+                10盒装 限时特价        
+        
+        
+            </p>
+            <p class="sub">1L*10</p>
+            <p class="price">
+                <em class="promotion">¥ 99</em>
+                    <span>¥ 199</span>                            </p>
+            <a cbclick="1-7" href="javascript:void(0)" class="i-cart"></a>
+
+            <div class="item-icon-box">
+                <i class="icon i-xsqg"></i>                            </div>
+
+        </li><li data-product-id="6575">
+            <!-- 4 -->
+            <a href="product/6575#keyStr=index-lc5-D#d5">
+            <img src="http://i2.chunboimg.com/group1/M00/01/3D/Cv4IdVU_OSGAEH7kAAtFjQfbhYo780_290_232.jpg" alt="url_m">
+            <h6>法国格朗尼橙汁</h6></a>
+            <p class="sub">
+            <!-- 赠品 -->
+                                            <!-- 副标题  -->
+                                无添加的100％纯果汁            
+                            <!-- 副标题  -->
+                无添加的100％纯果汁        
+        
+        
+            </p>
+            <p class="sub">1L</p>
+            <p class="price">
+                                    <b class="chunbo">¥ 40</b>
+                                </p>
+            <a cbclick="1-7" href="javascript:void(0)" class="i-cart"></a>
+
+            <div class="item-icon-box">
+                                            </div>
+
+        </li><li data-product-id="4887">
+            <!-- 5 -->
+            <a href="product/4887#keyStr=index-lc5-D#d6">
+            <img src="http://i3.chunboimg.com/group1/M00/01/0D/Cv4IdVUs1nuAXM_mAAXtYF9payI112_290_232.jpg" alt="url_m">
+            <h6>美国佛罗瑞达含果肉橙汁</h6></a>
+            <p class="sub">
+            <!-- 赠品 -->
+                                            <!-- 副标题  -->
+                                不加糖 不加水 无防腐剂            
+                            <!-- 副标题  -->
+                不加糖 不加水 无防腐剂        
+        
+        
+            </p>
+            <p class="sub">1L</p>
+            <p class="price">
+                                    <b class="chunbo">¥ 45</b>
+                                </p>
+            <a cbclick="1-7" href="javascript:void(0)" class="i-cart"></a>
+
+            <div class="item-icon-box">
+                                            </div>
+
+        </li><li data-product-id="4971">
+            <!-- 6 -->
+            <a href="product/4971#keyStr=index-lc5-D#d7">
+            <img src="http://i3.chunboimg.com/group1/M00/01/FD/Cv4IdVWJA5GAQ6PsAAZRoIeYtMk073_290_232.jpg" alt="url_m">
+            <h6>韩国延世牧场牛奶</h6></a>
+            <p class="sub">
+            <!-- 赠品 -->
+                                            <!-- 副标题  -->
+                                韩国牧场奶 抢鲜预售            
+                            <!-- 副标题  -->
+                韩国牧场奶 抢鲜预售        
+        
+        
+            </p>
+            <p class="sub">1L</p>
+            <p class="price">
+                <em class="promotion">¥ 29.8</em>
+                    <span>¥ 39.8</span>                            </p>
+            <a cbclick="1-7" href="javascript:void(0)" class="i-cart"></a>
+
+            <div class="item-icon-box">
+                <i class="icon i-xsqg"></i>                            </div>
+
+        </li>        <!-- 0 -->
+        <li class="more" style="background-color: #ffe0d4;margin-left:0px;">
+            <a href="/List/index?cid=122-0-0#keyStr=index-lc5-E"><img src="http://i1.chunboimg.com/group1/M00/02/A1/Cv4IbFW5kviAQa0-AABtixIvCig531.jpg"></a>
+                    </li>
+    </ul>
+</div><div class="layer">
+    <a href="List/index?cid=137-0-0#keyStr=index-lc6-A"><h3><span>
+
+    面点熟食.早餐
+    </span></h3>
+    </a>
+    <a href="/Act/1641#keyStr=index-lc6-B" class="layer-img"><img src="http://i0.chunboimg.com/group1/M00/04/90/Cv4IdVZD75eAbSzGAAJmu3npqm0854.jpg" alt=""></a>
+    <ul class="layer-list">
+        <li data-product-id="11861">
+            <!-- 0 -->
+            <a href="product/11861#keyStr=index-lc6-D#d1">
+            <img src="http://i2.chunboimg.com/group1/M00/04/8D/Cv4IdVZC1VKAOFwlAAmi-L7bWco931_290_232.jpg" alt="url_m">
+            <h6>三士居鲜美蘑菇净素水饺</h6></a>
+            <p class="sub">
+            <!-- 赠品 -->
+                                            <!-- 副标题  -->
+                                味美可口 适合食素人群            
+                            <!-- 副标题  -->
+                味美可口 适合食素人群        
+        
+        
+            </p>
+            <p class="sub">360g</p>
+            <p class="price">
+                <em class="promotion">¥ 18.5</em>
+                    <span>¥ 25.5</span>                            </p>
+            <a cbclick="1-7" href="javascript:void(0)" class="i-cart"></a>
+
+            <div class="item-icon-box">
+                <i class="icon i-xsqg"></i>                            </div>
+
+        </li><li data-product-id="12047">
+            <!-- 1 -->
+            <a href="product/12047#keyStr=index-lc6-D#d2">
+            <img src="http://i2.chunboimg.com/group1/M00/03/FA/Cv4IbFYY30yAMERWABCAz129OyE305_290_232.jpg" alt="url_m">
+            <h6>粗卤川式怪卤口味牛鞭花</h6></a>
+            <p class="sub">
+            <!-- 赠品 -->
+                                            <!-- 副标题  -->
+                                98％胶原蛋白 麻辣鲜香            
+                            <!-- 副标题  -->
+                98％胶原蛋白 麻辣鲜香        
+        
+        
+            </p>
+            <p class="sub">90g</p>
+            <p class="price">
+                                    <b class="chunbo">¥ 29.8</b>
+                                </p>
+            <a cbclick="1-7" href="javascript:void(0)" class="i-cart"></a>
+
+            <div class="item-icon-box">
+                                            </div>
+
+        </li><li data-product-id="4287">
+            <!-- 2 -->
+            <a href="product/4287#keyStr=index-lc6-D#d3">
+            <img src="http://i2.chunboimg.com/group1/M00/00/EF/Cv4IbFUiD9iAQaI9AAouqf0ZPrw734_290_232.jpg" alt="url_m">
+            <h6>德国捷森大燕麦片</h6></a>
+            <p class="sub">
+            <!-- 赠品 -->
+                                            <!-- 副标题  -->
+                                优质产区纯燕麦 高纤低热            
+                            <!-- 副标题  -->
+                优质产区纯燕麦 高纤低热        
+        
+        
+            </p>
+            <p class="sub">1kg</p>
+            <p class="price">
+                <em class="promotion">¥ 29.9</em>
+                    <span>¥ 39.8</span>                            </p>
+            <a cbclick="1-7" href="javascript:void(0)" class="i-cart"></a>
+
+            <div class="item-icon-box">
+                <i class="icon i-xsqg"></i>                            </div>
+
+        </li><li data-product-id="12087">
+            <!-- 3 -->
+            <a href="product/12087#keyStr=index-lc6-D#d4">
+            <img src="http://i2.chunboimg.com/group1/M00/04/21/Cv4IdVYkuDOAGG7VAAxsOZO3CZo524_290_232.jpg" alt="url_m">
+            <h6>尚料理西班牙海鲜饭</h6></a>
+            <p class="sub">
+            <!-- 赠品 -->
+                                            <!-- 副标题  -->
+                                西餐三大名菜之一 健康美味            
+                            <!-- 副标题  -->
+                西餐三大名菜之一 健康美味        
+        
+        
+            </p>
+            <p class="sub">300g</p>
+            <p class="price">
+                                    <b class="chunbo">¥ 42.5</b>
+                                </p>
+            <a cbclick="1-7" href="javascript:void(0)" class="i-cart"></a>
+
+            <div class="item-icon-box">
+                                            </div>
+
+        </li><li data-product-id="11413">
+            <!-- 4 -->
+            <a href="product/11413#keyStr=index-lc6-D#d5">
+            <img src="http://i3.chunboimg.com/group1/M00/03/6A/Cv4IdVXxFKmAXFGmAAejm-H5SaY276_290_232.jpg" alt="url_m">
+            <h6>圃美多甜辣炒年糕</h6></a>
+            <p class="sub">
+            <!-- 赠品 -->
+                                            <!-- 副标题  -->
+                                越嚼越香 新鲜爽口            
+                            <!-- 副标题  -->
+                越嚼越香 新鲜爽口        
+        
+        
+            </p>
+            <p class="sub">480g</p>
+            <p class="price">
+                                    <b class="chunbo">¥ 29.8</b>
+                                </p>
+            <a cbclick="1-7" href="javascript:void(0)" class="i-cart"></a>
+
+            <div class="item-icon-box">
+                                            </div>
+
+        </li><li data-product-id="11407">
+            <!-- 5 -->
+            <a href="product/11407#keyStr=index-lc6-D#d6">
+            <img src="http://i2.chunboimg.com/group1/M00/03/6A/Cv4IdVXxFSuAJGWOAAZ3au7kGTw575_290_232.jpg" alt="url_m">
+            <h6>圃美多荞麦冷面</h6></a>
+            <p class="sub">
+            <!-- 赠品 -->
+                                            <!-- 副标题  -->
+                                汤包酱包 爽滑筋道            
+                            <!-- 副标题  -->
+                汤包酱包 爽滑筋道        
+        
+        
+            </p>
+            <p class="sub"> 390g </p>
+            <p class="price">
+                                    <b class="chunbo">¥ 18.8</b>
+                                </p>
+            <a cbclick="1-7" href="javascript:void(0)" class="i-cart"></a>
+
+            <div class="item-icon-box">
+                                            </div>
+
+        </li><li data-product-id="7297">
+            <!-- 6 -->
+            <a href="product/7297#keyStr=index-lc6-D#d7">
+            <img src="http://i3.chunboimg.com/group1/M00/01/68/Cv4IbFVQJXmAKXiIAAitGBIm8Zs699_290_232.jpg" alt="url_m">
+            <h6>港之恋鲜果千层蛋糕榴莲味</h6></a>
+            <p class="sub">
+            <!-- 赠品 -->
+                                            <!-- 副标题  -->
+                                手工塑形 很Q的千层蛋糕            
+                            <!-- 副标题  -->
+                手工塑形 很Q的千层蛋糕        
+        
+        
+            </p>
+            <p class="sub">8寸</p>
+            <p class="price">
+                <em class="promotion">¥ 166</em>
+                    <span>¥ 198</span>                            </p>
+            <a cbclick="1-7" href="javascript:void(0)" class="i-cart"></a>
+
+            <div class="item-icon-box">
+                <i class="icon i-xsqg"></i>                            </div>
+
+        </li>        <!-- 0 -->
+        <li class="more" style="background-color: #fdfcf4;margin-left:0px;">
+            <a href="List/index?cid=137-0-0#keyStr=index-lc6-E"><img src="http://i1.chunboimg.com/group1/M00/03/F4/Cv4IbFYXMJGADLRCAADTP9qxDDA980.jpg"></a>
+                    </li>
+    </ul>
+</div><div class="layer">
+    <a href="/List/index?cid=154-0-0#keyStr=index-lc7-A"><h3><span>
+
+    基础粮油
+    </span></h3>
+    </a>
+    <a href="/Act/1615#keyStr=index-lc7-B" class="layer-img"><img src="http://i0.chunboimg.com/group1/M00/04/91/Cv4IbFZDTXKAP98PAALwRzlbF6c742.jpg" alt=""></a>
+    <ul class="layer-list">
+        <li data-product-id="12197">
+            <!-- 0 -->
+            <a href="product/12197#keyStr=index-lc7-D#d1">
+            <img src="http://i2.chunboimg.com/group1/M00/04/11/Cv4IbFYfHe2AWaN2AAstugT21MY943_290_232.jpg" alt="url_m">
+            <h6>2015年见食五常稻花香</h6></a>
+            <p class="sub">
+            <!-- 赠品 -->
+                                            <!-- 副标题  -->
+                                见食自有 真正五常有机米            
+                            <!-- 副标题  -->
+                见食自有 真正五常有机米        
+        
+        
+            </p>
+            <p class="sub">5kg</p>
+            <p class="price">
+                                    <b class="chunbo">¥ 99</b>
+                                </p>
+            <a cbclick="1-7" href="javascript:void(0)" class="i-cart"></a>
+
+            <div class="item-icon-box">
+                                            </div>
+
+        </li><li data-product-id="2119">
+            <!-- 1 -->
+            <a href="product/2119#keyStr=index-lc7-D#d2">
+            <img src="http://i2.chunboimg.com/group1/M00/01/14/Cv4IbFUvj1GAKLrIAAfNBoCQO-c217_290_232.jpg" alt="url_m">
+            <h6>河套牌雪花粉</h6></a>
+            <p class="sub">
+            <!-- 赠品 -->
+                                            <!-- 副标题  -->
+                                无增白剂 适合中式面点            
+                            <!-- 副标题  -->
+                无增白剂 适合中式面点        
+        
+        
+            </p>
+            <p class="sub">2.5kg</p>
+            <p class="price">
+                                    <b class="chunbo">¥ 43</b>
+                                </p>
+            <a cbclick="1-7" href="javascript:void(0)" class="i-cart"></a>
+
+            <div class="item-icon-box">
+                                            </div>
+
+        </li><li data-product-id="11281">
+            <!-- 2 -->
+            <a href="product/11281#keyStr=index-lc7-D#d3">
+            <img src="http://i3.chunboimg.com/group1/M00/03/91/Cv4IbFX6iGSAWIlnAAh_XxVE-Vo335_290_232.jpg" alt="url_m">
+            <h6>奥星双低农家小榨菜籽油</h6></a>
+            <p class="sub">
+            <!-- 赠品 -->
+                                            <!-- 副标题  -->
+                                自有基地 田间直达餐桌            
+                            <!-- 副标题  -->
+                自有基地 田间直达餐桌        
+        
+        
+            </p>
+            <p class="sub">5L</p>
+            <p class="price">
+                <em class="promotion">¥ 89</em>
+                    <span>¥ 99</span>                            </p>
+            <a cbclick="1-7" href="javascript:void(0)" class="i-cart"></a>
+
+            <div class="item-icon-box">
+                <i class="icon i-xsqg"></i>                            </div>
+
+        </li><li data-product-id="3503">
+            <!-- 3 -->
+            <a href="product/3503#keyStr=index-lc7-D#d4">
+            <img src="http://i3.chunboimg.com/group1/M00/01/2F/Cv4IbFU4xp2AG8tUAAqeIbmH0nA377_290_232.jpg" alt="url_m">
+            <h6>上润田园长白山柞木秋木耳</h6></a>
+            <p class="sub">
+            <!-- 赠品 -->
+                                            <!-- 副标题  -->
+                                来自东北黑土地山珍            
+                            <!-- 副标题  -->
+                来自东北黑土地山珍        
+        
+        
+            </p>
+            <p class="sub">70g</p>
+            <p class="price">
+                <em class="promotion">¥ 14.8</em>
+                    <span>¥ 19.8</span>                            </p>
+            <a cbclick="1-7" href="javascript:void(0)" class="i-cart"></a>
+
+            <div class="item-icon-box">
+                <i class="icon i-xsqg"></i>                            </div>
+
+        </li><li data-product-id="9607">
+            <!-- 4 -->
+            <a href="product/9607#keyStr=index-lc7-D#d5">
+            <img src="http://i2.chunboimg.com/group1/M00/02/87/Cv4IdVWxy2CAbAxtAAl_R4dxqIY453_290_232.jpg" alt="url_m">
+            <h6>闵松有机紫菜</h6></a>
+            <p class="sub">
+            <!-- 赠品 -->
+                                            <!-- 副标题  -->
+                                纯净海域的“海洋时蔬”            
+                            <!-- 副标题  -->
+                纯净海域的“海洋时蔬”        
+        
+        
+            </p>
+            <p class="sub">30g</p>
+            <p class="price">
+                                    <b class="chunbo">¥ 12.9</b>
+                                </p>
+            <a cbclick="1-7" href="javascript:void(0)" class="i-cart"></a>
+
+            <div class="item-icon-box">
+                                            </div>
+
+        </li><li data-product-id="2153">
+            <!-- 5 -->
+            <a href="product/2153#keyStr=index-lc7-D#d6">
+            <img src="http://i2.chunboimg.com/group1/M00/02/3B/Cv4IdVWcrHaAI3c5AAShd1dUOpg512_290_232.jpg" alt="url_m">
+            <h6>巧婆婆草莓果酱</h6></a>
+            <p class="sub">
+            <!-- 赠品 -->
+                                            <!-- 副标题  -->
+                                源自法国 无防腐剂            
+                            <!-- 副标题  -->
+                源自法国 无防腐剂        
+        
+        
+            </p>
+            <p class="sub">370g</p>
+            <p class="price">
+                                    <b class="chunbo">¥ 38.9</b>
+                                </p>
+            <a cbclick="1-7" href="javascript:void(0)" class="i-cart"></a>
+
+            <div class="item-icon-box">
+                                            </div>
+
+        </li><li data-product-id="2051">
+            <!-- 6 -->
+            <a href="product/2051#keyStr=index-lc7-D#d7">
+            <img src="http://i2.chunboimg.com/group1/M00/01/0C/Cv4IbFUsv9eAYGzbAAWu6X137fU557_290_232.jpg" alt="url_m">
+            <h6>古币芝麻香油</h6></a>
+            <p class="sub">
+            <!-- 赠品 -->
+                                            <!-- 副标题  -->
+                                植物脂香 醇厚浓郁            
+                            <!-- 副标题  -->
+                植物脂香 醇厚浓郁        
+        
+        
+            </p>
+            <p class="sub">450ml</p>
+            <p class="price">
+                                    <b class="chunbo">¥ 24.8</b>
+                                </p>
+            <a cbclick="1-7" href="javascript:void(0)" class="i-cart"></a>
+
+            <div class="item-icon-box">
+                                            </div>
+
+        </li>        <!-- 0 -->
+        <li class="more" style="background-color: #ffe8c0;margin-left:0px;">
+            <a href="/List/index?cid=154-0-0#keyStr=index-lc7-E"><img src="http://i0.chunboimg.com/group1/M00/00/EB/Cv4IdVUeavGAX2mlAACqFqXff6U491.jpg"></a>
+                    </li>
+    </ul>
+</div><div class="layer">
+    <a href="/List/index?cid=187-0-0#keyStr=index-lc8-A"><h3><span>
+
+    休闲食品
+    </span></h3>
+    </a>
+    <a href="/product/12479#keyStr=index-lc8-B" class="layer-img"><img src="http://i1.chunboimg.com/group1/M00/04/7D/Cv4IbFY8VoyAT23NAAKKRc--B84524.jpg" alt=""></a>
+    <ul class="layer-list">
+        <li data-product-id="11845">
+            <!-- 0 -->
+            <a href="product/11845#keyStr=index-lc8-D#d1">
+            <img src="http://i3.chunboimg.com/group1/M00/03/8A/Cv4IbFX4A9OAbrCAAAiPv1-iWFc223_290_232.jpg" alt="url_m">
+            <h6>台湾微热山丘凤梨酥</h6></a>
+            <p class="sub">
+            <!-- 赠品 -->
+                                            <!-- 副标题  -->
+                                道地台湾好味 凤梨奉礼到            
+                            <!-- 副标题  -->
+                道地台湾好味 凤梨奉礼到        
+        
+        
+            </p>
+            <p class="sub">500g</p>
+            <p class="price">
+                                    <b class="chunbo">¥ 120</b>
+                                </p>
+            <a cbclick="1-7" href="javascript:void(0)" class="i-cart"></a>
+
+            <div class="item-icon-box">
+                                            </div>
+
+        </li><li data-product-id="6535">
+            <!-- 1 -->
+            <a href="product/6535#keyStr=index-lc8-D#d2">
+            <img src="http://i3.chunboimg.com/group1/M00/00/F1/Cv4IdVUiIE6AQSmSAAqUDRjMBnQ462_290_232.jpg" alt="url_m">
+            <h6>韩国金镐特制葡萄籽油海苔</h6></a>
+            <p class="sub">
+            <!-- 赠品 -->
+                                            <!-- 副标题  -->
+                                鲜嫩海苔 葡萄籽油烤制            
+                            <!-- 副标题  -->
+                鲜嫩海苔 葡萄籽油烤制        
+        
+        
+            </p>
+            <p class="sub">4.7g*3</p>
+            <p class="price">
+                <em class="promotion">¥ 12</em>
+                    <span>¥ 14.9</span>                            </p>
+            <a cbclick="1-7" href="javascript:void(0)" class="i-cart"></a>
+
+            <div class="item-icon-box">
+                <i class="icon i-xsqg"></i>                            </div>
+
+        </li><li data-product-id="11359">
+            <!-- 2 -->
+            <a href="product/11359#keyStr=index-lc8-D#d3">
+            <img src="http://i2.chunboimg.com/group1/M00/03/26/Cv4IbFXe0GmAJ_27AAqXXwNLHWo154_290_232.jpg" alt="url_m">
+            <h6>果之宝零添加山楂爽</h6></a>
+            <p class="sub">
+            <!-- 赠品 -->
+                                            <!-- 副标题  -->
+                                原果原味 零添加零色素            
+                            <!-- 副标题  -->
+                原果原味 零添加零色素        
+        
+        
+            </p>
+            <p class="sub">180g</p>
+            <p class="price">
+                                    <b class="chunbo">¥ 11.8</b>
+                                </p>
+            <a cbclick="1-7" href="javascript:void(0)" class="i-cart"></a>
+
+            <div class="item-icon-box">
+                                            </div>
+
+        </li><li data-product-id="4549">
+            <!-- 3 -->
+            <a href="product/4549#keyStr=index-lc8-D#d4">
+            <img src="http://i3.chunboimg.com/group1/M00/00/EF/Cv4IdVUiEUyAO89aAAfPnjCO3S8047_290_232.jpg" alt="url_m">
+            <h6>德国思贝格混合果仁</h6></a>
+            <p class="sub">
+            <!-- 赠品 -->
+                                            <!-- 副标题  -->
+                                优质品质,营养丰富            
+                            <!-- 副标题  -->
+                优质品质,营养丰富        
+        
+        
+            </p>
+            <p class="sub">150g</p>
+            <p class="price">
+                <em class="promotion">¥ 45</em>
+                    <span>¥ 55.6</span>                            </p>
+            <a cbclick="1-7" href="javascript:void(0)" class="i-cart"></a>
+
+            <div class="item-icon-box">
+                <i class="icon i-xsqg"></i>                            </div>
+
+        </li><li data-product-id="12819">
+            <!-- 4 -->
+            <a href="product/12819#keyStr=index-lc8-D#d5">
+            <img src="http://i3.chunboimg.com/group1/M00/04/7C/Cv4IdVY8ZfiAfhuOAAjY4tSbAvA817_290_232.jpg" alt="url_m">
+            <h6>美国施耐德普莱面包酥片</h6></a>
+            <p class="sub">
+            <!-- 赠品 -->
+                                            <!-- 副标题  -->
+                                百年家传配方 香脆浓郁            
+                            <!-- 副标题  -->
+                百年家传配方 香脆浓郁        
+        
+        
+            </p>
+            <p class="sub"> 56g*2 </p>
+            <p class="price">
+                                    <b class="chunbo">¥ 17</b>
+                                </p>
+            <a cbclick="1-7" href="javascript:void(0)" class="i-cart"></a>
+
+            <div class="item-icon-box">
+                                            </div>
+
+        </li><li data-product-id="9195">
+            <!-- 5 -->
+            <a href="product/9195#keyStr=index-lc8-D#d6">
+            <img src="http://i2.chunboimg.com/group1/M00/02/45/Cv4IbFWfbd2AGqgSAAQQZjZPC5M094_290_232.jpg" alt="url_m">
+            <h6>圣米希尔经典玛德琳蛋糕</h6></a>
+            <p class="sub">
+            <!-- 赠品 -->
+                                            <!-- 副标题  -->
+                                法国百年品牌 香糯不腻            
+                            <!-- 副标题  -->
+                法国百年品牌 香糯不腻        
+        
+        
+            </p>
+            <p class="sub">250g</p>
+            <p class="price">
+                <em class="promotion">¥ 20</em>
+                    <span>¥ 25.9</span>                            </p>
+            <a cbclick="1-7" href="javascript:void(0)" class="i-cart"></a>
+
+            <div class="item-icon-box">
+                <i class="icon i-xsqg"></i>                            </div>
+
+        </li><li data-product-id="4737">
+            <!-- 6 -->
+            <a href="product/4737#keyStr=index-lc8-D#d7">
+            <img src="http://i3.chunboimg.com/group1/M00/00/F1/Cv4IbFUiHv2AHuJPAAmtqB4CLZM881_290_232.jpg" alt="url_m">
+            <h6>亚细亚田园黄秋葵脆片</h6></a>
+            <p class="sub">
+            <!-- 赠品 -->
+                                            <!-- 副标题  -->
+                                非膨化 真空脱水            
+                            <!-- 副标题  -->
+                非膨化 真空脱水        
+        
+        
+            </p>
+            <p class="sub">70g</p>
+            <p class="price">
+                                    <b class="chunbo">¥ 12.4</b>
+                                </p>
+            <a cbclick="1-7" href="javascript:void(0)" class="i-cart"></a>
+
+            <div class="item-icon-box">
+                                            </div>
+
+        </li>        <!-- 0 -->
+        <li class="more" style="background-color: #e1f2ff;margin-left:0px;">
+            <a href="/List/index?cid=187-0-0#keyStr=index-lc8-E"><img src="http://i0.chunboimg.com/group1/M00/00/EB/Cv4IdVUeaxmAeG9AAADFvqf7c8Q303.jpg"></a>
+                    </li>
+    </ul>
+</div><div class="layer">
+    <a href="/List/index?cid=218-0-0#keyStr=index-lc9-A"><h3><span>
+
+    美酒.咖啡.茶
+    </span></h3>
+    </a>
+    <a href="/product/7485#keyStr=index-lc9-B" class="layer-img"><img src="http://i1.chunboimg.com/group1/M00/04/8F/Cv4IbFZC7QGACfutAALyqvjuOnM032.jpg" alt=""></a>
+    <ul class="layer-list">
+        <li data-product-id="3989">
+            <!-- 0 -->
+            <a href="product/3989#keyStr=index-lc9-D#d1">
+            <img src="http://i2.chunboimg.com/group1/M00/01/53/Cv4IbFVIhcqANLoNAAeO226YFbM193_290_232.jpg" alt="url_m">
+            <h6>希腊阿提卡百里香蜂蜜</h6></a>
+            <p class="sub">
+            <!-- 赠品 -->
+                                            <!-- 副标题  -->
+                                源自爱琴海 野生花卉            
+                            <!-- 副标题  -->
+                源自爱琴海 野生花卉        
+        
+        
+            </p>
+            <p class="sub">500g</p>
+            <p class="price">
+                <em class="promotion">¥ 139</em>
+                    <span>¥ 278</span>                            </p>
+            <a cbclick="1-7" href="javascript:void(0)" class="i-cart"></a>
+
+            <div class="item-icon-box">
+                <i class="icon i-xsqg"></i>                            </div>
+
+        </li><li data-product-id="5721">
+            <!-- 1 -->
+            <a href="product/5721#keyStr=index-lc9-D#d2">
+            <img src="http://i2.chunboimg.com/group1/M00/01/3D/Cv4IbFU_N-GAEh4TAAg8hjxOffg743_290_232.jpg" alt="url_m">
+            <h6>韩国农协蜂蜜红枣茶</h6></a>
+            <p class="sub">
+            <!-- 赠品 -->
+                                            <!-- 副标题  -->
+                                优质原料 秋日之选            
+                            <!-- 副标题  -->
+                优质原料 秋日之选        
+        
+        
+            </p>
+            <p class="sub">1kg</p>
+            <p class="price">
+                                    <b class="chunbo">¥ 49</b>
+                                </p>
+            <a cbclick="1-7" href="javascript:void(0)" class="i-cart"></a>
+
+            <div class="item-icon-box">
+                                            </div>
+
+        </li><li data-product-id="3945">
+            <!-- 2 -->
+            <a href="product/3945#keyStr=index-lc9-D#d3">
+            <img src="http://i2.chunboimg.com/group1/M00/02/83/Cv4IdVWwiTqAJnweAAec9WIY6pw316_290_232.jpg" alt="url_m">
+            <h6>台湾贝瑞斯塔滤挂咖啡</h6></a>
+            <p class="sub">
+            <!-- 赠品 -->
+                                            <!-- 副标题  -->
+                                日本专利滤挂 好冲不闭合            
+                            <!-- 副标题  -->
+                日本专利滤挂 好冲不闭合        
+        
+        
+            </p>
+            <p class="sub">40g</p>
+            <p class="price">
+                                    <b class="chunbo">¥ 39.5</b>
+                                </p>
+            <a cbclick="1-7" href="javascript:void(0)" class="i-cart"></a>
+
+            <div class="item-icon-box">
+                                            </div>
+
+        </li><li data-product-id="6481">
+            <!-- 3 -->
+            <a href="product/6481#keyStr=index-lc9-D#d4">
+            <img src="http://i3.chunboimg.com/group1/M00/01/53/Cv4IdVVIbNqAeJDNAAbh7GzDHZY138_290_232.jpg" alt="url_m">
+            <h6>意大利意利过滤式浓缩咖啡粉</h6></a>
+            <p class="sub">
+            <!-- 赠品 -->
+                                            <!-- 副标题  -->
+                                适合法压壶　滴滤壶制作            
+                            <!-- 副标题  -->
+                适合法压壶　滴滤壶制作        
+        
+        
+            </p>
+            <p class="sub">250g</p>
+            <p class="price">
+                                    <b class="chunbo">¥ 106</b>
+                                </p>
+            <a cbclick="1-7" href="javascript:void(0)" class="i-cart"></a>
+
+            <div class="item-icon-box">
+                                            </div>
+
+        </li><li data-product-id="11215">
+            <!-- 4 -->
+            <a href="product/11215#keyStr=index-lc9-D#d5">
+            <img src="http://i3.chunboimg.com/group1/M00/02/E7/Cv4IbFXNnRSABE7QAAbPHiTGNN4309_290_232.jpg" alt="url_m">
+            <h6>茶里缤纷袋泡茶礼盒</h6></a>
+            <p class="sub">
+            <!-- 赠品 -->
+                                            <!-- 副标题  -->
+                                7种口味 不一样的心情            
+                            <!-- 副标题  -->
+                7种口味 不一样的心情        
+        
+        
+            </p>
+            <p class="sub">19克</p>
+            <p class="price">
+                <em class="promotion">¥ 19.9</em>
+                    <span>¥ 39</span>                            </p>
+            <a cbclick="1-7" href="javascript:void(0)" class="i-cart"></a>
+
+            <div class="item-icon-box">
+                <i class="icon i-xsqg"></i>                            </div>
+
+        </li><li data-product-id="11221">
+            <!-- 5 -->
+            <a href="product/11221#keyStr=index-lc9-D#d6">
+            <img src="http://i3.chunboimg.com/group1/M00/03/1E/Cv4IdVXdSAaAd1fvAAgrw-eeyKA776_290_232.jpg" alt="url_m">
+            <h6>日本姜黄之力护肝饮料</h6></a>
+            <p class="sub">
+            <!-- 赠品 -->
+                                            <!-- 副标题  -->
+                                饮酒宿醉人士的护肝首选            
+                            <!-- 副标题  -->
+                饮酒宿醉人士的护肝首选        
+        
+        
+            </p>
+            <p class="sub">100ml*6</p>
+            <p class="price">
+                <em class="promotion">¥ 128</em>
+                    <span>¥ 148.8</span>                            </p>
+            <a cbclick="1-7" href="javascript:void(0)" class="i-cart"></a>
+
+            <div class="item-icon-box">
+                <i class="icon i-xsqg"></i>                            </div>
+
+        </li><li data-product-id="11001">
+            <!-- 6 -->
+            <a href="product/11001#keyStr=index-lc9-D#d7">
+            <img src="http://i2.chunboimg.com/group1/M00/03/1F/Cv4IdVXdamqAMOL6AAjZH0CW6g4219_290_232.jpg" alt="url_m">
+            <h6>恩济堂润肺秋梨膏</h6></a>
+            <p class="sub">
+            <!-- 赠品 -->
+                                            <!-- 副标题  -->
+                                妙配药食两用食材            
+                            <!-- 副标题  -->
+                妙配药食两用食材        
+        
+        
+            </p>
+            <p class="sub">350g</p>
+            <p class="price">
+                                    <b class="chunbo">¥ 25</b>
+                                </p>
+            <a cbclick="1-7" href="javascript:void(0)" class="i-cart"></a>
+
+            <div class="item-icon-box">
+                                            </div>
+
+        </li>        <!-- 0 -->
+        <li class="more" style="background-color: #e8f6df ;margin-left:0px;">
+            <a href="/List/index?cid=218-0-0#keyStr=index-lc9-E"><img src="http://i1.chunboimg.com/group1/M00/02/78/Cv4IbFWtwOGAHnUaAAB4tE77WRc612.jpg"></a>
+                    </li>
+    </ul>
+</div><div class="layer">
+    <a href="/List/index?cid=283-0-0#keyStr=index-lc10-A"><h3><span>
+
+    母婴.滋补
+    </span></h3>
+    </a>
+    <a href="/product/6311#keyStr=index-lc10-B" class="layer-img"><img src="http://i1.chunboimg.com/group1/M00/04/8E/Cv4IbFZCqY6AE1hSAAJMaXhyk-E829.jpg" alt=""></a>
+    <ul class="layer-list">
+        <li data-product-id="4839">
+            <!-- 0 -->
+            <a href="product/4839#keyStr=index-lc10-D#d1">
+            <img src="http://i3.chunboimg.com/group1/M00/01/43/Cv4IdVVAtJ6AWLnJAAdrdZMFKBw288_290_232.jpg" alt="url_m">
+            <h6>德国Aptamil爱宝美3段奶粉</h6></a>
+            <p class="sub">
+            <!-- 赠品 -->
+                                            <!-- 副标题  -->
+                                40年专注婴幼儿营养研究            
+                            <!-- 副标题  -->
+                40年专注婴幼儿营养研究        
+        
+        
+            </p>
+            <p class="sub">800g</p>
+            <p class="price">
+                <em class="promotion">¥ 130</em>
+                    <span>¥ 260</span>                            </p>
+            <a cbclick="1-7" href="javascript:void(0)" class="i-cart"></a>
+
+            <div class="item-icon-box">
+                <i class="icon i-xsqg"></i>                            </div>
+
+        </li><li data-product-id="4105">
+            <!-- 1 -->
+            <a href="product/4105#keyStr=index-lc10-D#d2">
+            <img src="http://i3.chunboimg.com/group1/M00/04/53/Cv4IdVYxiEiAbSlTAAhNOeaIG0U559_290_232.jpg" alt="url_m">
+            <h6>森活健康酵素液</h6></a>
+            <p class="sub">
+            <!-- 赠品 -->
+                                            <!-- 副标题  -->
+                                108种蔬果原料发酵而成            
+                            <!-- 副标题  -->
+                108种蔬果原料发酵而成        
+        
+        
+            </p>
+            <p class="sub">300ml</p>
+            <p class="price">
+                                    <b class="chunbo">¥ 498</b>
+                                </p>
+            <a cbclick="1-7" href="javascript:void(0)" class="i-cart"></a>
+
+            <div class="item-icon-box">
+                                            </div>
+
+        </li><li data-product-id="5041">
+            <!-- 2 -->
+            <a href="product/5041#keyStr=index-lc10-D#d3">
+            <img src="http://i3.chunboimg.com/group1/M00/01/31/Cv4IbFU53LCAPHGpAAk_1JO1z5o763_290_232.jpg" alt="url_m">
+            <h6>嘉宝燕麦配方营养米粉</h6></a>
+            <p class="sub">
+            <!-- 赠品 -->
+                                            <!-- 副标题  -->
+                                众多妈妈选择的婴儿米粉            
+                            <!-- 副标题  -->
+                众多妈妈选择的婴儿米粉        
+        
+        
+            </p>
+            <p class="sub">225g</p>
+            <p class="price">
+                <em class="promotion">¥ 42</em>
+                    <span>¥ 48</span>                            </p>
+            <a cbclick="1-7" href="javascript:void(0)" class="i-cart"></a>
+
+            <div class="item-icon-box">
+                <i class="icon i-xsqg"></i>                            </div>
+
+        </li><li data-product-id="11999">
+            <!-- 3 -->
+            <a href="product/11999#keyStr=index-lc10-D#d4">
+            <img src="http://i2.chunboimg.com/group1/M00/04/45/Cv4IbFYtmaWAB3elAAdcoEVSuT4092_290_232.jpg" alt="url_m">
+            <h6>天藜白藜麦350g</h6></a>
+            <p class="sub">
+            <!-- 赠品 -->
+                                            <!-- 副标题  -->
+                                富含膳食纤维 易咀嚼            
+                            <!-- 副标题  -->
+                富含膳食纤维 易咀嚼        
+        
+        
+            </p>
+            <p class="sub">350g</p>
+            <p class="price">
+                                    <b class="chunbo">¥ 69</b>
+                                </p>
+            <a cbclick="1-7" href="javascript:void(0)" class="i-cart"></a>
+
+            <div class="item-icon-box">
+                                            </div>
+
+        </li><li data-product-id="8247">
+            <!-- 4 -->
+            <a href="product/8247#keyStr=index-lc10-D#d5">
+            <img src="http://i2.chunboimg.com/group1/M00/01/97/Cv4IdVVe_giARXWIAArCEItkjpo230_290_232.jpg" alt="url_m">
+            <h6>悠然谷宝宝鸡蛋6枚</h6></a>
+            <p class="sub">
+            <!-- 赠品 -->
+                                            <!-- 副标题  -->
+                                蛋黄比例多 富含卵磷脂             
+                            <!-- 副标题  -->
+                蛋黄比例多 富含卵磷脂         
+        
+        
+            </p>
+            <p class="sub">6枚</p>
+            <p class="price">
+                                    <b class="chunbo">¥ 15.8</b>
+                                </p>
+            <a cbclick="1-7" href="javascript:void(0)" class="i-cart"></a>
+
+            <div class="item-icon-box">
+                                            </div>
+
+        </li><li data-product-id="9039">
+            <!-- 5 -->
+            <a href="product/9039#keyStr=index-lc10-D#d6">
+            <img src="http://i3.chunboimg.com/group1/M00/02/3C/Cv4IdVWc2tyAGJ7FAAa3pSv5Asc271_290_232.jpg" alt="url_m">
+            <h6>白桦益康精选有机黑芝麻300g</h6></a>
+            <p class="sub">
+            <!-- 赠品 -->
+                                            <!-- 副标题  -->
+                                山区种植 全程有机            
+                            <!-- 副标题  -->
+                山区种植 全程有机        
+        
+        
+            </p>
+            <p class="sub">300g</p>
+            <p class="price">
+                                    <b class="chunbo">¥ 18.7</b>
+                                </p>
+            <a cbclick="1-7" href="javascript:void(0)" class="i-cart"></a>
+
+            <div class="item-icon-box">
+                                            </div>
+
+        </li><li data-product-id="6537">
+            <!-- 6 -->
+            <a href="product/6537#keyStr=index-lc10-D#d7">
+            <img src="http://i3.chunboimg.com/group1/M00/00/F1/Cv4IbFUiHzSAMLZXAApu9s85yek324_290_232.jpg" alt="url_m">
+            <h6>韩国金镐特制橄榄油海苔4.7g*3</h6></a>
+            <p class="sub">
+            <!-- 赠品 -->
+                                            <!-- 副标题  -->
+                                鲜嫩海苔 橄榄油岩烧而成            
+                            <!-- 副标题  -->
+                鲜嫩海苔 橄榄油岩烧而成        
+        
+        
+            </p>
+            <p class="sub">4.7g*3</p>
+            <p class="price">
+                <em class="promotion">¥ 12</em>
+                    <span>¥ 14.9</span>                            </p>
+            <a cbclick="1-7" href="javascript:void(0)" class="i-cart"></a>
+
+            <div class="item-icon-box">
+                <i class="icon i-xsqg"></i>                            </div>
+
+        </li>        <!-- 0 -->
+        <li class="more" style="background-color:  #ffe8c0;margin-left:0px;">
+            <a href="/List/index?cid=283-0-0#keyStr=index-lc10-E"><img src="http://i1.chunboimg.com/group1/M00/03/D6/Cv4IbFYLov-ADn04AAC0RvRszF4046.jpg"></a>
+                    </li>
+    </ul>
+</div><div class="layer">
+    <a href="/List/index?cid=979-0-0#keyStr=index-lc11-A"><h3><span>
+
+    亲环境用品
+    </span></h3>
+    </a>
+    <a href="/product/10751#keyStr=index-lc11-B" class="layer-img"><img src="http://i0.chunboimg.com/group1/M00/04/8B/Cv4IbFZBn52ABbF7AAIHRZ4uPx8684.jpg" alt=""></a>
+    <ul class="layer-list">
+        <li data-product-id="10587">
+            <!-- 0 -->
+            <a href="product/10587#keyStr=index-lc11-D#d1">
+            <img src="http://i3.chunboimg.com/group1/M00/03/2C/Cv4IbFXgLriAUlZtAAI0VpioiFw098_290_232.jpg" alt="url_m">
+            <h6>日本虎冠蛋清蛋黄分离勺</h6></a>
+            <p class="sub">
+            <!-- 赠品 -->
+                                            <!-- 副标题  -->
+                                食品级树脂 轻松分离蛋黄            
+                            <!-- 副标题  -->
+                食品级树脂 轻松分离蛋黄        
+        
+        
+            </p>
+            <p class="sub">1个装</p>
+            <p class="price">
+                                    <b class="chunbo">¥ 30</b>
+                                </p>
+            <a cbclick="1-7" href="javascript:void(0)" class="i-cart"></a>
+
+            <div class="item-icon-box">
+                                            </div>
+
+        </li><li data-product-id="9635">
+            <!-- 1 -->
+            <a href="product/9635#keyStr=index-lc11-D#d2">
+            <img src="http://i3.chunboimg.com/group1/M00/03/25/Cv4IbFXezd6AG6WWAAg8FxArD_8463_290_232.jpg" alt="url_m">
+            <h6>泡泡玉洗衣机内缸清洗剂</h6></a>
+            <p class="sub">
+            <!-- 赠品 -->
+                                            <!-- 副标题  -->
+                                洗衣机内槽专用清洁剂            
+                            <!-- 副标题  -->
+                洗衣机内槽专用清洁剂        
+        
+        
+            </p>
+            <p class="sub">500g</p>
+            <p class="price">
+                                    <b class="chunbo">¥ 78</b>
+                                </p>
+            <a cbclick="1-7" href="javascript:void(0)" class="i-cart"></a>
+
+            <div class="item-icon-box">
+                                            </div>
+
+        </li><li data-product-id="9955">
+            <!-- 2 -->
+            <a href="product/9955#keyStr=index-lc11-D#d3">
+            <img src="http://i3.chunboimg.com/group1/M00/03/2C/Cv4IbFXgLJ-ATNPKAAUa-ZtebsM653_290_232.jpg" alt="url_m">
+            <h6>法国柔舒然儿童安全棉签</h6></a>
+            <p class="sub">
+            <!-- 赠品 -->
+                                            <!-- 副标题  -->
+                                特大棉花头设计 防止深入            
+                            <!-- 副标题  -->
+                特大棉花头设计 防止深入        
+        
+        
+            </p>
+            <p class="sub"> 56 支 </p>
+            <p class="price">
+                                    <b class="chunbo">¥ 35</b>
+                                </p>
+            <a cbclick="1-7" href="javascript:void(0)" class="i-cart"></a>
+
+            <div class="item-icon-box">
+                                            </div>
+
+        </li><li data-product-id="12313">
+            <!-- 3 -->
+            <a href="product/12313#keyStr=index-lc11-D#d4">
+            <img src="http://i2.chunboimg.com/group1/M00/04/50/Cv4IbFYwQCKATnlbAAXfuHzJYlI848_290_232.jpg" alt="url_m">
+            <h6>德国法克曼榉木擀面杖</h6></a>
+            <p class="sub">
+            <!-- 赠品 -->
+                                            <!-- 副标题  -->
+                                榉木实木 弧度手柄            
+                            <!-- 副标题  -->
+                榉木实木 弧度手柄        
+        
+        
+            </p>
+            <p class="sub">长35cm 面杖长26cm</p>
+            <p class="price">
+                                    <b class="chunbo">¥ 29.9</b>
+                                </p>
+            <a cbclick="1-7" href="javascript:void(0)" class="i-cart"></a>
+
+            <div class="item-icon-box">
+                                            </div>
+
+        </li><li data-product-id="9815">
+            <!-- 4 -->
+            <a href="product/9815#keyStr=index-lc11-D#d5">
+            <img src="http://i3.chunboimg.com/group1/M00/03/44/Cv4IdVXlgtWAH3HRAAOZjaVObwc367_290_232.jpg" alt="url_m">
+            <h6>美国小绿芽硅胶牙刷</h6></a>
+            <p class="sub">
+            <!-- 赠品 -->
+                                            <!-- 副标题  -->
+                                安全柔软 贴心保护            
+                            <!-- 副标题  -->
+                安全柔软 贴心保护        
+        
+        
+            </p>
+            <p class="sub">1个装</p>
+            <p class="price">
+                                    <b class="chunbo">¥ 90</b>
+                                </p>
+            <a cbclick="1-7" href="javascript:void(0)" class="i-cart"></a>
+
+            <div class="item-icon-box">
+                                            </div>
+
+        </li><li data-product-id="10657">
+            <!-- 5 -->
+            <a href="product/10657#keyStr=index-lc11-D#d6">
+            <img src="http://i2.chunboimg.com/group1/M00/03/3B/Cv4IbFXj2cWATx4jAAKs91U0CJs198_290_232.jpg" alt="url_m">
+            <h6>日本锋爱华陶瓷削皮刀</h6></a>
+            <p class="sub">
+            <!-- 赠品 -->
+                                            <!-- 副标题  -->
+                                削皮顺畅 清洗方便            
+                            <!-- 副标题  -->
+                削皮顺畅 清洗方便        
+        
+        
+            </p>
+            <p class="sub"> 1件 </p>
+            <p class="price">
+                                    <b class="chunbo">¥ 75</b>
+                                </p>
+            <a cbclick="1-7" href="javascript:void(0)" class="i-cart"></a>
+
+            <div class="item-icon-box">
+                                            </div>
+
+        </li><li data-product-id="9755">
+            <!-- 6 -->
+            <a href="product/9755#keyStr=index-lc11-D#d7">
+            <img src="http://i2.chunboimg.com/group1/M00/03/2A/Cv4IdVXf_yWAZU0UAAQSFr8R4N4242_290_232.jpg" alt="url_m">
+            <h6>美国小绿芽保温吸盘碗</h6></a>
+            <p class="sub">
+            <!-- 赠品 -->
+                                            <!-- 副标题  -->
+                                玉米淀粉材质 保温防烫             
+                            <!-- 副标题  -->
+                玉米淀粉材质 保温防烫         
+        
+        
+            </p>
+            <p class="sub">19.5*5.5cm</p>
+            <p class="price">
+                                    <b class="chunbo">¥ 105</b>
+                                </p>
+            <a cbclick="1-7" href="javascript:void(0)" class="i-cart"></a>
+
+            <div class="item-icon-box">
+                                            </div>
+
+        </li>        <!-- 0 -->
+        <li class="more" style="background-color: #e8f6df ;margin-left:0px;">
+            <a href="/List/index?cid=979-0-0#keyStr=index-lc11-E"><img src="http://i0.chunboimg.com/group1/M00/03/8C/Cv4IbFX5FuCAMi7VAABwO4KlqAM224.jpg"></a>
+                    </li>
+    </ul>
+</div>
+        <!-- footer -->
+    <footer>
+    <div class="footer-tool">
+                    <a href="/Login/index.html" cbclick="1-2">登录</a><span>|</span><a href="/Login/regMobile.html" cbclick="1-1">注册</a><a href="" class="toTop">回到顶部</a>    </div>
+    <a href="#" class="on sel changeSystem" value="1">触屏版</a>|<a href="#" class="changeSystem" value="2">电脑版</a>
+    
+</footer>
+
+<input type="hidden" name="changeSystem" id="changeSystem_url" value="/Base/changeSystem.html">
+<input type="hidden" name="andriod_app_download_version" id="andriod_app_download_version" value="ChunBoMall_1.5.4.apk">
+<script type="text/javascript" src="js/m/common.js"></script>
+<script src="js/stats.js"></script>
+
+
+    <script>
+        // $(function(){
+        //     $('#J_nav').on('tap','.nav-logo',function(){
+        //         var navWrap = $('#J_nav .nav-wrap');
+        //         if( navWrap.hasClass('nav-spread') ){
+        //             navWrap.removeClass('nav-spread').addClass('nav-shrink');
+        //         }else{
+        //             navWrap.removeClass('nav-shrink').addClass('nav-spread');
+        //         }
+        //     });
+
+        // });
+    </script>
+
+    <script src="js/common/url_helper.js"></script>
+<!--     <script src="js/search/search.js"></script>
+    <script src="js/product/category.js"></script>
+    <script src="js/product/product.js"></script> -->
+    <script src="js/common/common.js" type="text/javascript"></script>
+    <script src="js/page.js" type="text/javascript"></script>
+    <script src="js/index.js" type="text/javascript"></script>
+
+<!--     <script>
+        $(function () {
+            //绑定点击
+            window.Search.bindClickEvent();
+
+            //绑定加入购物车
+
+        });
+
+    </script> -->    
+
+</body></html>

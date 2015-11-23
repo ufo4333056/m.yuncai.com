@@ -1,0 +1,48 @@
+<!doctype html><html lang="en"><head>
+	<meta charset="UTF-8">
+	<title>支付</title>
+	<meta name="viewport" content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0,user-scalable=no">
+	<link rel="stylesheet" href="css/common.css">
+	<link rel="stylesheet" href="css/mobilepay.css">
+</head>
+<body>
+	<div class="title"><a href="http://www.chunbo.com/OrderInfo/index.html" class="title-back"></a>支付</div>
+	
+
+<div class="pay-tip">订单已提交，您还需付款￥ 39.90，<br>请在<span>4小时内</span>完成付款。</div>
+
+
+	
+
+
+<ul class="pay-list">
+
+	
+    
+	
+	<li class="line-bottom" cbclick="38-13" name="channelli" channelname="ALIPAY_WAP" channelid="8" cardtype="3">
+		<a href="javascript:void(0);" cbclick="38-13"><img name="channelImg" src="img/PAY_MOBILE_ALIPAY_WAP.png" alt="">支付宝</a>
+	</li>
+	
+	<li class="line-bottom" cbclick="38-13" name="channelli" channelname="WEIXIN" channelid="5" cardtype="3">
+		<a href="javascript:void(0);" cbclick="38-13"><img name="channelImg" src="img/PAY_MOBILE_WEIXIN.png" alt="">微信</a>
+	</li>
+	
+	
+
+
+
+
+
+	<li class="line-bottom" name="showDebitCard"><a href="javascript:void(0);">储蓄卡支付<i class="icon-go"></i></a></li>
+	<li class="line-bottom" name="showCreditCard"><a href="javascript:void(0);">信用卡支付<i class="icon-go"></i></a></li>
+
+
+
+</ul>
+<input id="input_trade_json" type="hidden" value="trade_id=1300000004201511181001950241">
+<script type="text/javascript" src="script/jquery-1.11.1.min.js"></script>
+<script type="text/javascript" src="script/mobilePayCenter.js?201412151948"></script>
+<script type="text/javascript" src="http://www.chunbo.com/Public/js/stats.js?20150610"></script>
+
+</body></html>

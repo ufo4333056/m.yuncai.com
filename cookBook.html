@@ -1,0 +1,641 @@
+<!doctype html><html><head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0,user-scalable=no">
+        <title>食谱首页 - 见食</title>
+        <link rel="stylesheet" href="css/main.css" type="text/css" media="screen">
+    </head>
+    <body class="cookbook">
+
+
+<script src="js/common.js"></script>
+<header class="category-header">
+    <a href="javascript:{window.history.back();}" class="back"></a><a href="#" class="search-cancel">取消</a><input type="text" class="search" placeholder="搜索见食商品" id="search_key"><a href="javascript:void(0);" class="search-act">搜索</a>
+</header>
+<div class="search-res">
+    <h5>最近搜索</h5>
+    <ul></ul>
+    <p class="del-search-key"><a href="#">删除搜索记录<i class="del">×</i></a></p>
+</div>
+<script>
+    $(function () {
+        //搜索按钮
+        $('#search_key').on('focus',function(){
+            $(this).addClass('search-focus');
+            search.act();
+            search.get();
+        }).on('blur',function(){
+            $(this).removeClass('search-focus');
+        });
+        var search = {
+            'act':function(){
+                $('.search-cancel,.search-res,.search-act').show();
+                $('.back').hide();
+                $('body').addClass('disableScorll');
+                if ($("#category_level").val() > 1) {
+                    $("#filter_div").hide();
+                }
+                $('.search-cancel').on('click',function(e){
+                    e.preventDefault();
+                    $('#search_key').val('');
+                    $('.search-cancel,.search-res,.search-act').hide();
+                    $('.back').show();
+                    $('body').removeClass('disableScorll');
+                    if ($("#category_level").val() > 1) {
+                        $("#filter_div").show();
+                    }
+                });
+            },
+            'word':localStorage.searchWord?localStorage.searchWord.split(",") : [],
+            'set':function(w){
+                if(w){
+                    for (var i = 0; i < this.word.length; i++) {
+                        if(w == this.word[i]){
+                            this.word.splice(i, 1);
+                        }
+                    };
+                    this.word.push(w);
+                    localStorage.searchWord = this.word;
+                    // $('.search').val('');
+                }
+            },
+            'get':function(){
+                var $searchResUl = $('.search-res ul');
+                var num = 6; //显示个数
+                $searchResUl.html('');
+                if(this.word.length > 0){
+                    for (var i = 0; i < this.word.length; i++) {
+                        if(this.word.length < num || this.word.length - i <= num){
+                            $searchResUl.prepend('<li>'+this.word[i]+'</li>')
+                        }
+                    };
+                    $searchResUl.find('li').on('tap',function(){
+                        search.set($(this).text());
+                        goto_search($(this).text());
+                    });
+                }else{
+                    this.empty();
+                }
+            },
+            'del':function(){
+                localStorage.searchWord = [];
+                this.word = [];
+                this.get();
+            },
+            'empty':function(){
+                if(this.word.length == 0){
+                    $('.search-res ul').append('<li class="empty">您还没有搜索记录</li>');
+                    $('.del-search-key').hide();
+                }
+            }
+        }
+        // search.get();
+        $('.search-act').on('tap',function(e){
+            e.preventDefault();
+            goto_search();
+            search.set($('#search_key').val());
+        });
+        $('.del-search-key a').on('tap',function(e){
+            e.preventDefault();
+            search.del();
+        });
+        $('.search-act-icon').on('tap',function(e){
+            e.preventDefault();
+            $('#search_key').show().focus();
+            $('.search-act-icon').hide();
+			$("#site_area").hide();
+            $('.search-cancel').on('tap',function(e){
+                e.preventDefault();
+                $('#search_key').hide();
+                $('.search-act-icon').show();
+				$("#site_area").show();
+            });
+        });
+
+        $("#search_key").on("keydown", function (e) {
+            var curKey = e.which;
+            if (curKey == 13) {
+                search.set($('#search_key').val());
+                // goto_search();
+            }
+        });
+
+        function goto_search(w) {
+            if (w || $("#search_key").val().length > 0) {
+                var search_key = w || $("#search_key").val();
+                location.href = "/Search/index?key=" + search_key;
+            }
+        }
+    });
+</script>
+<nav>
+    <ul class="www_nav">
+        <li><a href="/"><i class="nav-0"></i>首页</a></li>
+        <li><a href="/list/main"><i class="nav-1"></i>分类</a></li>
+        <li class="on"><a href="/Cookbook"><i class="nav-2"></i>菜谱</a></li>
+        <li><a href="/cart/"><i class="nav-3"></i>购物车<i class="num" id="AppCartNums">1</i></a></li>
+        <li><a href="/member/"><i class="nav-4"></i>我的见食</a></li>
+    </ul>
+</nav>
+
+<div class="filter-layer">
+    <div class="search-mask"></div>
+    <div class="search-filter">
+        <header class="common-header">
+            <a href="javascript:;" class="header-back"><i class="icon-back"></i></a>
+        </header>
+        <footer>
+            <a href="#" class="btn-gray">重置</a>
+            <a href="#" class="btn-red">确认</a>
+        </footer>
+        <ul class="filter-list">
+            <li class="active">
+                <h4>分类</h4>
+                <ul class="filter-level-2">
+                    <li>
+                    <h5><a href="/Cookbook/index?cookbook_category=水果">水果</a></h5><h5><a href="/Cookbook/index?cookbook_category=蔬菜">蔬菜</a></h5><h5><a href="/Cookbook/index?cookbook_category=主食">主食</a></h5><h5><a href="/Cookbook/index?cookbook_category=猪肉">猪肉</a></h5><h5><a href="/Cookbook/index?cookbook_category=牛肉">牛肉</a></h5><h5><a href="/Cookbook/index?cookbook_category=羊肉">羊肉</a></h5><h5><a href="/Cookbook/index?cookbook_category=蛋禽">蛋禽</a></h5><h5><a href="/Cookbook/index?cookbook_category=河海鲜">河海鲜</a></h5><h5><a href="/Cookbook/index?cookbook_category=豆制品 ">豆制品 </a></h5><h5><a href="/Cookbook/index?cookbook_category=乳制品">乳制品</a></h5><h5><a href="/Cookbook/index?cookbook_category=干货">干货</a></h5>                    </li>
+                </ul>
+            </li>
+            <li>
+                <h4>
+                <a href="/Cookbook/index?level=简单">简单</a><a href="/Cookbook/index?level=中等难度">中等难度</a><a href="/Cookbook/index?level=复杂">复杂</a>                难易程度
+                </h4>
+            </li>
+            <li>
+                <h4>
+                <span class="text-selected">
+                    <a href="/Cookbook/index?food_category=儿童餐">儿童餐</a>
+                    </span><span class="text-selected">
+                    <a href="/Cookbook/index?food_category=家常中餐">家常中餐</a>
+                    </span><span class="text-selected">
+                    <a href="/Cookbook/index?food_category=家常西餐">家常西餐</a>
+                    </span><span class="text-selected">
+                    <a href="/Cookbook/index?food_category=创新菜">创新菜</a>
+                    </span><span class="text-selected">
+                    <a href="/Cookbook/index?food_category="></a>
+                    </span>                烹饪菜式
+                </h4>
+            </li>
+            <li>
+                <h4>
+                    <span class="text-selected">
+                        <a href="/Cookbook/index?chef_name=大董">大董</a>
+                        </span><span class="text-selected">
+                        <a href="/Cookbook/index?chef_name=文怡">文怡</a>
+                        </span><span class="text-selected">
+                        <a href="/Cookbook/index?chef_name=张朝辉">张朝辉</a>
+                        </span><span class="text-selected">
+                        <a href="/Cookbook/index?chef_name=刘鑫">刘鑫</a>
+                        </span><span class="text-selected">
+                        <a href="/Cookbook/index?chef_name=刘鹏">刘鹏</a>
+                        </span>                    创作大厨
+                </h4>
+            </li>
+        </ul>
+    </div>
+</div>
+<div class="cookbook-warp">
+    <ul>
+        <li>
+            <a href="/Cookbook/detail/cookbook_id/813/recommend_id/,,#keyStr=cooklist-list-d1">
+                <img src="http://i2.chunboimg.com/group1/M00/03/EF/Cv4IdVYWFTqAN79XAAPaGzrHKME814_530_350.jpg" alt="">
+                <h4>香煎金线鱼</h4>
+                <p class="sub">盘中游曳黄丝线</p>
+                <p class="cook-level cook-level-1 "><i class="cl-1"></i><i class="cl-2"></i><i class="cl-3"></i>简单</p>
+            </a>
+        </li><li>
+            <a href="/Cookbook/detail/cookbook_id/811/recommend_id/,,#keyStr=cooklist-list-d2">
+                <img src="http://i3.chunboimg.com/group1/M00/03/F0/Cv4IbFYWB3aAAzJlAARDjmMvUu0352_530_350.jpg" alt="">
+                <h4>椒盐沙丁鱼</h4>
+                <p class="sub">酥脆肉嫩一口鱼</p>
+                <p class="cook-level cook-level-1 "><i class="cl-1"></i><i class="cl-2"></i><i class="cl-3"></i>简单</p>
+            </a>
+        </li><li>
+            <a href="/Cookbook/detail/cookbook_id/809/recommend_id/,,#keyStr=cooklist-list-d3">
+                <img src="http://i2.chunboimg.com/group1/M00/03/F0/Cv4IbFYV3MyAaexDAAQImJsYcZ8664_530_350.jpg" alt="">
+                <h4>锡纸烤黄蚬子</h4>
+                <p class="sub">焗烤鲜美小贝壳</p>
+                <p class="cook-level cook-level-1 "><i class="cl-1"></i><i class="cl-2"></i><i class="cl-3"></i>简单</p>
+            </a>
+        </li><li>
+            <a href="/Cookbook/detail/cookbook_id/807/recommend_id/,,#keyStr=cooklist-list-d4">
+                <img src="http://i2.chunboimg.com/group1/M00/03/D4/Cv4IdVYLmjKAEMw_AAOwkfA3ALo898_530_350.jpg" alt="">
+                <h4>红烧沙丁鱼</h4>
+                <p class="sub">味道浓厚，小而美味</p>
+                <p class="cook-level cook-level-2 "><i class="cl-1"></i><i class="cl-2"></i><i class="cl-3"></i>中等难度</p>
+            </a>
+        </li><li>
+            <a href="/Cookbook/detail/cookbook_id/805/recommend_id/,,#keyStr=cooklist-list-d5">
+                <img src="http://i3.chunboimg.com/group1/M00/03/D5/Cv4IbFYLhn-ASNX_AAOHc1Igf8U667_530_350.jpg" alt="">
+                <h4>梭子蟹炒年糕</h4>
+                <p class="sub">鲜香蟹与入味的软糯年糕</p>
+                <p class="cook-level cook-level-1 "><i class="cl-1"></i><i class="cl-2"></i><i class="cl-3"></i>简单</p>
+            </a>
+        </li><li>
+            <a href="/Cookbook/detail/cookbook_id/803/recommend_id/,,#keyStr=cooklist-list-d6">
+                <img src="http://i3.chunboimg.com/group1/M00/03/D4/Cv4IbFYLWwKAYWyfAAOXaHgQKqo677_530_350.jpg" alt="">
+                <h4>椒盐皮皮虾</h4>
+                <p class="sub">捏起那块酥脆虾蛄</p>
+                <p class="cook-level cook-level-2 "><i class="cl-1"></i><i class="cl-2"></i><i class="cl-3"></i>中等难度</p>
+            </a>
+        </li><li>
+            <a href="/Cookbook/detail/cookbook_id/801/recommend_id/,,#keyStr=cooklist-list-d7">
+                <img src="http://i3.chunboimg.com/group1/M00/03/C8/Cv4IdVYJEI2AMOl6AAPCB_gMgGo672_530_350.jpg" alt="">
+                <h4>辣酒花螺</h4>
+                <p class="sub">消灭这盆足味爽口花螺</p>
+                <p class="cook-level cook-level-1 "><i class="cl-1"></i><i class="cl-2"></i><i class="cl-3"></i>简单</p>
+            </a>
+        </li><li>
+            <a href="/Cookbook/detail/cookbook_id/799/recommend_id/,,#keyStr=cooklist-list-d8">
+                <img src="http://i3.chunboimg.com/group1/M00/03/C8/Cv4IbFYI5KeAcCygAAQm50IqNB0695_530_350.jpg" alt="">
+                <h4>辣炒鸟贝</h4>
+                <p class="sub">伸出贝壳的脆脆金钩</p>
+                <p class="cook-level cook-level-2 "><i class="cl-1"></i><i class="cl-2"></i><i class="cl-3"></i>中等难度</p>
+            </a>
+        </li><li>
+            <a href="/Cookbook/detail/cookbook_id/797/recommend_id/525,419,#keyStr=cooklist-list-d9">
+                <img src="http://i3.chunboimg.com/group1/M00/03/B2/Cv4IbFYDhzKARqdQAAOjS4dhj4U565_530_350.jpg" alt="">
+                <h4>清蒸带鱼</h4>
+                <p class="sub">来自深海咸鲜的问候</p>
+                <p class="cook-level cook-level-1 "><i class="cl-1"></i><i class="cl-2"></i><i class="cl-3"></i>简单</p>
+            </a>
+        </li><li>
+            <a href="/Cookbook/detail/cookbook_id/795/recommend_id/791,793,789#keyStr=cooklist-list-d10">
+                <img src="http://i3.chunboimg.com/group1/M00/03/70/Cv4IdVXynumAOmZ0AAMH9bVfQ-Y923_530_350.jpg" alt="">
+                <h4>云吞鱼丸面</h4>
+                <p class="sub">面碗中的港味情怀</p>
+                <p class="cook-level cook-level-1 "><i class="cl-1"></i><i class="cl-2"></i><i class="cl-3"></i>简单</p>
+            </a>
+        </li><li>
+            <a href="/Cookbook/detail/cookbook_id/793/recommend_id/791,789,787#keyStr=cooklist-list-d11">
+                <img src="http://i2.chunboimg.com/group1/M00/03/70/Cv4IdVXym5yAAi0PAAMVnbjf34s662_530_350.jpg" alt="">
+                <h4>鱼丸时蔬捞面</h4>
+                <p class="sub">酱拌面的美味不输汤面</p>
+                <p class="cook-level cook-level-1 "><i class="cl-1"></i><i class="cl-2"></i><i class="cl-3"></i>简单</p>
+            </a>
+        </li><li>
+            <a href="/Cookbook/detail/cookbook_id/791/recommend_id/789,787,#keyStr=cooklist-list-d12">
+                <img src="http://i2.chunboimg.com/group1/M00/03/71/Cv4IbFXyluCADLtQAAMGO6ok99M924_530_350.jpg" alt="">
+                <h4>鱼丸青菜香葱面</h4>
+                <p class="sub">暖心一碗清汤面</p>
+                <p class="cook-level cook-level-1 "><i class="cl-1"></i><i class="cl-2"></i><i class="cl-3"></i>简单</p>
+            </a>
+        </li><li>
+            <a href="/Cookbook/detail/cookbook_id/789/recommend_id/787,,#keyStr=cooklist-list-d13">
+                <img src="http://i3.chunboimg.com/group1/M00/03/71/Cv4IbFXykdmATJXnAAJyR4LGLRA196_530_350.jpg" alt="">
+                <h4>鱼丸海鲜砂锅面</h4>
+                <p class="sub">热腾腾又质朴的海之味</p>
+                <p class="cook-level cook-level-1 "><i class="cl-1"></i><i class="cl-2"></i><i class="cl-3"></i>简单</p>
+            </a>
+        </li><li>
+            <a href="/Cookbook/detail/cookbook_id/787/recommend_id/789,,#keyStr=cooklist-list-d14">
+                <img src="http://i2.chunboimg.com/group1/M00/03/71/Cv4IbFXyizGAWpXpAANbTF4cJjA314_530_350.jpg" alt="">
+                <h4>鱼丸海鲜牛肉时蔬炒面</h4>
+                <p class="sub">盛宴般的什锦炒面</p>
+                <p class="cook-level cook-level-1 "><i class="cl-1"></i><i class="cl-2"></i><i class="cl-3"></i>简单</p>
+            </a>
+        </li><li>
+            <a href="/Cookbook/detail/cookbook_id/785/recommend_id/,,#keyStr=cooklist-list-d15">
+                <img src="http://i3.chunboimg.com/group1/M00/02/9D/Cv4IdVW4Ts6AGIpNAAP1eA7q6qA132_530_350.jpg" alt="">
+                <h4>德式猪肉肠配酸菜</h4>
+                <p class="sub">香肠之乡的绝妙套餐</p>
+                <p class="cook-level cook-level-1 "><i class="cl-1"></i><i class="cl-2"></i><i class="cl-3"></i>简单</p>
+            </a>
+        </li><li>
+            <a href="/Cookbook/detail/cookbook_id/783/recommend_id/345,699,469#keyStr=cooklist-list-d16">
+                <img src="http://i3.chunboimg.com/group1/M00/02/9D/Cv4IdVW4SpmAc4q1AAOlPuS-Jig895_530_350.jpg" alt="">
+                <h4>文蛤蒸蛋</h4>
+                <p class="sub">嫩黄蛋羹上的小贝壳</p>
+                <p class="cook-level cook-level-1 "><i class="cl-1"></i><i class="cl-2"></i><i class="cl-3"></i>简单</p>
+            </a>
+        </li><li>
+            <a href="/Cookbook/detail/cookbook_id/781/recommend_id/,,#keyStr=cooklist-list-d17">
+                <img src="http://i3.chunboimg.com/group1/M00/02/99/Cv4IdVW3Q_WAQjJgAAQmwIZEroI864_530_350.jpg" alt="">
+                <h4>红烧鲅鱼</h4>
+                <p class="sub">盘中的大海健将</p>
+                <p class="cook-level cook-level-2 "><i class="cl-1"></i><i class="cl-2"></i><i class="cl-3"></i>中等难度</p>
+            </a>
+        </li><li>
+            <a href="/Cookbook/detail/cookbook_id/779/recommend_id/,,#keyStr=cooklist-list-d18">
+                <img src="http://i3.chunboimg.com/group1/M00/02/99/Cv4IbFW3KfOAXacxAAQvDKjr1IU308_530_350.jpg" alt="">
+                <h4>酒香基围虾</h4>
+                <p class="sub">醇香美酒惹虾醉</p>
+                <p class="cook-level cook-level-1 "><i class="cl-1"></i><i class="cl-2"></i><i class="cl-3"></i>简单</p>
+            </a>
+        </li><li>
+            <a href="/Cookbook/detail/cookbook_id/777/recommend_id/,,#keyStr=cooklist-list-d19">
+                <img src="http://i3.chunboimg.com/group1/M00/02/99/Cv4IbFW3IuCAI53zAAOlUssJUgw750_530_350.jpg" alt="">
+                <h4>椒盐北极虾</h4>
+                <p class="sub">酥脆小虾满口鲜</p>
+                <p class="cook-level cook-level-2 "><i class="cl-1"></i><i class="cl-2"></i><i class="cl-3"></i>中等难度</p>
+            </a>
+        </li><li>
+            <a href="/Cookbook/detail/cookbook_id/775/recommend_id/,,#keyStr=cooklist-list-d20">
+                <img src="http://i2.chunboimg.com/group1/M00/02/99/Cv4IbFW3CySAczTVAAPm_PwwTUQ422_530_350.jpg" alt="">
+                <h4>葱姜豆豉炒蛏子</h4>
+                <p class="sub">肥美蛏子海人参</p>
+                <p class="cook-level cook-level-2 "><i class="cl-1"></i><i class="cl-2"></i><i class="cl-3"></i>中等难度</p>
+            </a>
+        </li><li>
+            <a href="/Cookbook/detail/cookbook_id/773/recommend_id/583,629,#keyStr=cooklist-list-d21">
+                <img src="http://i3.chunboimg.com/group1/M00/02/94/Cv4IbFW11R-ATG_XAAQHPSpZapk733_530_350.jpg" alt="">
+                <h4>生蚝刺身</h4>
+                <p class="sub">天堂来自海洋</p>
+                <p class="cook-level cook-level-1 "><i class="cl-1"></i><i class="cl-2"></i><i class="cl-3"></i>简单</p>
+            </a>
+        </li><li>
+            <a href="/Cookbook/detail/cookbook_id/771/recommend_id/,,#keyStr=cooklist-list-d22">
+                <img src="http://i3.chunboimg.com/group1/M00/02/94/Cv4IbFW1zfqAPJ-gAAMJe2gGfLc308_530_350.jpg" alt="">
+                <h4>酱脊骨</h4>
+                <p class="sub">喷香排骨来下饭</p>
+                <p class="cook-level cook-level-2 "><i class="cl-1"></i><i class="cl-2"></i><i class="cl-3"></i>中等难度</p>
+            </a>
+        </li><li>
+            <a href="/Cookbook/detail/cookbook_id/769/recommend_id/,,#keyStr=cooklist-list-d23">
+                <img src="http://i3.chunboimg.com/group1/M00/02/94/Cv4IdVW1qf-ASoiSAANzs64kds8543_530_350.jpg" alt="">
+                <h4>干笋老鸭汤</h4>
+                <p class="sub">一锅鸭汤来清补</p>
+                <p class="cook-level cook-level-2 "><i class="cl-1"></i><i class="cl-2"></i><i class="cl-3"></i>中等难度</p>
+            </a>
+        </li><li>
+            <a href="/Cookbook/detail/cookbook_id/763/recommend_id/781,653,387#keyStr=cooklist-list-d24">
+                <img src="http://i2.chunboimg.com/group1/M00/02/0C/Cv4IdVWNJaWAcGLvAARhKhgyjQU488_530_350.jpg" alt="">
+                <h4>鲜蔬柠香青花鱼</h4>
+                <p class="sub">拥有漂亮花纹的美味青花鱼</p>
+                <p class="cook-level cook-level-2 "><i class="cl-1"></i><i class="cl-2"></i><i class="cl-3"></i>中等难度</p>
+            </a>
+        </li><li>
+            <a href="/Cookbook/detail/cookbook_id/761/recommend_id/517,367,703#keyStr=cooklist-list-d25">
+                <img src="http://i2.chunboimg.com/group1/M00/02/0C/Cv4IbFWNHmuANDYoAAO1uE2ThxY652_530_350.jpg" alt="">
+                <h4>糖醋拌冰菜</h4>
+                <p class="sub">钻石蔬菜脆生生</p>
+                <p class="cook-level cook-level-1 "><i class="cl-1"></i><i class="cl-2"></i><i class="cl-3"></i>简单</p>
+            </a>
+        </li><li>
+            <a href="/Cookbook/detail/cookbook_id/759/recommend_id/493,743,723#keyStr=cooklist-list-d26">
+                <img src="http://i3.chunboimg.com/group1/M00/01/FE/Cv4IdVWJJDWAFZZLAAPnRx0xDYc546_530_350.jpg" alt="">
+                <h4>香菇蒸琵琶腿</h4>
+                <p class="sub">鸡肉与它的好搭档</p>
+                <p class="cook-level cook-level-1 "><i class="cl-1"></i><i class="cl-2"></i><i class="cl-3"></i>简单</p>
+            </a>
+        </li><li>
+            <a href="/Cookbook/detail/cookbook_id/757/recommend_id/,,#keyStr=cooklist-list-d27">
+                <img src="http://i3.chunboimg.com/group1/M00/01/F4/Cv4IbFWD09uAQjpBAAQMw7ySdY0582_530_350.jpg" alt="">
+                <h4>酱肘子</h4>
+                <p class="sub">两颊生香皮弹柔嫩的肘子</p>
+                <p class="cook-level cook-level-2 "><i class="cl-1"></i><i class="cl-2"></i><i class="cl-3"></i>中等难度</p>
+            </a>
+        </li><li>
+            <a href="/Cookbook/detail/cookbook_id/755/recommend_id/763,741,781#keyStr=cooklist-list-d28">
+                <img src="http://i2.chunboimg.com/group1/M00/01/F4/Cv4IdVWD0GWADpWtAAPZ5hz85XI038_530_350.jpg" alt="">
+                <h4>西柠煎红鱼</h4>
+                <p class="sub">开胃柠香鱼排</p>
+                <p class="cook-level cook-level-1 "><i class="cl-1"></i><i class="cl-2"></i><i class="cl-3"></i>简单</p>
+            </a>
+        </li><li>
+            <a href="/Cookbook/detail/cookbook_id/753/recommend_id/733,553,323#keyStr=cooklist-list-d29">
+                <img src="http://i3.chunboimg.com/group1/M00/01/F4/Cv4IdVWDypmAFX-sAANdKZ5BPWk052_530_350.jpg" alt="">
+                <h4>西红柿马兰头丸子汤</h4>
+                <p class="sub">清新一碗肉丸汤</p>
+                <p class="cook-level cook-level-2 "><i class="cl-1"></i><i class="cl-2"></i><i class="cl-3"></i>中等难度</p>
+            </a>
+        </li><li>
+            <a href="/Cookbook/detail/cookbook_id/751/recommend_id/745,,#keyStr=cooklist-list-d30">
+                <img src="http://i2.chunboimg.com/group1/M00/01/F0/Cv4IbFWCVqWANyhGAAOCewZwNic947_530_350.jpg" alt="">
+                <h4>韭菜炒章鱼</h4>
+                <p class="sub">韭叶鲜，章鱼香</p>
+                <p class="cook-level cook-level-2 "><i class="cl-1"></i><i class="cl-2"></i><i class="cl-3"></i>中等难度</p>
+            </a>
+        </li><li>
+            <a href="/Cookbook/detail/cookbook_id/749/recommend_id/747,323,#keyStr=cooklist-list-d31">
+                <img src="http://i3.chunboimg.com/group1/M00/01/EF/Cv4IbFWBTf-ATU4wAALlfD0LX9g594_530_350.jpg" alt="">
+                <h4>白灼花蛤</h4>
+                <p class="sub">只尝一个“鲜”字</p>
+                <p class="cook-level cook-level-1 "><i class="cl-1"></i><i class="cl-2"></i><i class="cl-3"></i>简单</p>
+            </a>
+        </li><li>
+            <a href="/Cookbook/detail/cookbook_id/747/recommend_id/749,323,#keyStr=cooklist-list-d32">
+                <img src="http://i2.chunboimg.com/group1/M00/01/EE/Cv4IdVWBS9GAL9GrAAPhkvjPnsI084_530_350.jpg" alt="">
+                <h4>蒜蓉花蛤</h4>
+                <p class="sub">吮指辣味贝壳来了</p>
+                <p class="cook-level cook-level-2 "><i class="cl-1"></i><i class="cl-2"></i><i class="cl-3"></i>中等难度</p>
+            </a>
+        </li><li>
+            <a href="/Cookbook/detail/cookbook_id/745/recommend_id/751,,#keyStr=cooklist-list-d33">
+                <img src="http://i2.chunboimg.com/group1/M00/01/EE/Cv4IbFWBQxeAQaIbAAQb_XAcC3Y944_530_350.jpg" alt="">
+                <h4>活吃章鱼</h4>
+                <p class="sub">翻滚吧，小触手</p>
+                <p class="cook-level cook-level-1 "><i class="cl-1"></i><i class="cl-2"></i><i class="cl-3"></i>简单</p>
+            </a>
+        </li><li>
+            <a href="/Cookbook/detail/cookbook_id/743/recommend_id/759,495,421#keyStr=cooklist-list-d34">
+                <img src="http://i3.chunboimg.com/group1/M00/01/E5/Cv4IbFV-enGAZbDFAAM0sIJLEqE919_530_350.jpg" alt="">
+                <h4>蜜汁琵琶腿</h4>
+                <p class="sub">鸡腿的诱惑</p>
+                <p class="cook-level cook-level-2 "><i class="cl-1"></i><i class="cl-2"></i><i class="cl-3"></i>中等难度</p>
+            </a>
+        </li><li>
+            <a href="/Cookbook/detail/cookbook_id/741/recommend_id/523,567,645#keyStr=cooklist-list-d35">
+                <img src="http://i3.chunboimg.com/group1/M00/01/E5/Cv4IdVV-dzGAHjuCAAN01z5Xf7s956_530_350.jpg" alt="">
+                <h4>酸甜烤龙利鱼</h4>
+                <p class="sub">茄汁烤鱼块</p>
+                <p class="cook-level cook-level-2 "><i class="cl-1"></i><i class="cl-2"></i><i class="cl-3"></i>中等难度</p>
+            </a>
+        </li><li>
+            <a href="/Cookbook/detail/cookbook_id/739/recommend_id/725,457,491#keyStr=cooklist-list-d36">
+                <img src="http://i3.chunboimg.com/group1/M00/01/E5/Cv4IbFV-dK-AfXiUAAQP-5Vv2jw365_530_350.jpg" alt="">
+                <h4>西兰花炒牛柳</h4>
+                <p class="sub">鲜嫩牛柳满口香</p>
+                <p class="cook-level cook-level-2 "><i class="cl-1"></i><i class="cl-2"></i><i class="cl-3"></i>中等难度</p>
+            </a>
+        </li><li>
+            <a href="/Cookbook/detail/cookbook_id/737/recommend_id/723,715,685#keyStr=cooklist-list-d37">
+                <img src="http://i3.chunboimg.com/group1/M00/01/E5/Cv4IbFV-ZAeAU8JiAAMaDptpJ2M490_530_350.jpg" alt="">
+                <h4>蒜香肉片炒天葵</h4>
+                <p class="sub">柔软味美的紫背天葵</p>
+                <p class="cook-level cook-level-1 "><i class="cl-1"></i><i class="cl-2"></i><i class="cl-3"></i>简单</p>
+            </a>
+        </li><li>
+            <a href="/Cookbook/detail/cookbook_id/735/recommend_id/,,#keyStr=cooklist-list-d38">
+                <img src="http://i2.chunboimg.com/group1/M00/01/E4/Cv4IbFV-SkCAG3wBAALPCi3KUYY342_530_350.jpg" alt="">
+                <h4>马蹄百合饮</h4>
+                <p class="sub">一碗甜汤，清热润肺</p>
+                <p class="cook-level cook-level-1 "><i class="cl-1"></i><i class="cl-2"></i><i class="cl-3"></i>简单</p>
+            </a>
+        </li><li>
+            <a href="/Cookbook/detail/cookbook_id/733/recommend_id/323,513,753#keyStr=cooklist-list-d39">
+                <img src="http://i3.chunboimg.com/group1/M00/01/E4/Cv4IbFV-R0CALR71AAKA_YYmmMs612_530_350.jpg" alt="">
+                <h4>鸡汤奶白菜</h4>
+                <p class="sub">一碗温暖蔬菜</p>
+                <p class="cook-level cook-level-1 "><i class="cl-1"></i><i class="cl-2"></i><i class="cl-3"></i>简单</p>
+            </a>
+        </li><li>
+            <a href="/Cookbook/detail/cookbook_id/731/recommend_id/505,385,685#keyStr=cooklist-list-d40">
+                <img src="http://i2.chunboimg.com/group1/M00/01/E4/Cv4IdVV-RQyAcrALAANftCBCRwY300_530_350.jpg" alt="">
+                <h4>红虾仁炒豌豆尖</h4>
+                <p class="sub">虾仁鲜香青菜香鲜</p>
+                <p class="cook-level cook-level-1 "><i class="cl-1"></i><i class="cl-2"></i><i class="cl-3"></i>简单</p>
+            </a>
+        </li><li>
+            <a href="/Cookbook/detail/cookbook_id/729/recommend_id/769,753,571#keyStr=cooklist-list-d41">
+                <img src="http://i2.chunboimg.com/group1/M00/01/E4/Cv4IdVV-PDuAQqm5AALRD7cPRFU829_530_350.jpg" alt="">
+                <h4>黑鸡枞竹笋牛尾汤</h4>
+                <p class="sub">牛尾精华蕴藏于此</p>
+                <p class="cook-level cook-level-2 "><i class="cl-1"></i><i class="cl-2"></i><i class="cl-3"></i>中等难度</p>
+            </a>
+        </li><li>
+            <a href="/Cookbook/detail/cookbook_id/727/recommend_id/427,413,555#keyStr=cooklist-list-d42">
+                <img src="http://i3.chunboimg.com/group1/M00/01/DC/Cv4IdVV6q-GADhglAANrur5-Fe4278_530_350.jpg" alt="">
+                <h4>百合南瓜羹</h4>
+                <p class="sub">舀起一勺橙黄色奶油南瓜</p>
+                <p class="cook-level cook-level-1 "><i class="cl-1"></i><i class="cl-2"></i><i class="cl-3"></i>简单</p>
+            </a>
+        </li><li>
+            <a href="/Cookbook/detail/cookbook_id/725/recommend_id/739,715,643#keyStr=cooklist-list-d43">
+                <img src="http://i3.chunboimg.com/group1/M00/01/CF/Cv4IbFV2jDWACrhqAAQBcqVk2LY401_530_350.jpg" alt="">
+                <h4>黑胡椒杂菌炒牛仔骨</h4>
+                <p class="sub">牛肉充满肉汁，鲜香好食</p>
+                <p class="cook-level cook-level-1 "><i class="cl-1"></i><i class="cl-2"></i><i class="cl-3"></i>简单</p>
+            </a>
+        </li><li>
+            <a href="/Cookbook/detail/cookbook_id/723/recommend_id/737,731,739#keyStr=cooklist-list-d44">
+                <img src="http://i3.chunboimg.com/group1/M00/01/CF/Cv4IbFV2iXyAS0S9AAMCgapAhRI919_530_350.jpg" alt="">
+                <h4>鸡丝炒苋菜</h4>
+                <p class="sub">清淡鸡肉炒青菜</p>
+                <p class="cook-level cook-level-1 "><i class="cl-1"></i><i class="cl-2"></i><i class="cl-3"></i>简单</p>
+            </a>
+        </li><li>
+            <a href="/Cookbook/detail/cookbook_id/721/recommend_id/711,517,281#keyStr=cooklist-list-d45">
+                <img src="http://i2.chunboimg.com/group1/M00/01/CE/Cv4IdVV2XdaAPtSgAAN8C5fSoN4432_530_350.jpg" alt="">
+                <h4>白灼秋葵</h4>
+                <p class="sub">五角果荚味道好 </p>
+                <p class="cook-level cook-level-1 "><i class="cl-1"></i><i class="cl-2"></i><i class="cl-3"></i>简单</p>
+            </a>
+        </li><li>
+            <a href="/Cookbook/detail/cookbook_id/719/recommend_id/493,453,361#keyStr=cooklist-list-d46">
+                <img src="http://i2.chunboimg.com/group1/M00/01/CE/Cv4IbFV2ViyADYuAAAMdcikX92A858_530_350.jpg" alt="">
+                <h4>叉烧肉</h4>
+                <p class="sub">叉烧叉烧，满口生香</p>
+                <p class="cook-level cook-level-1 "><i class="cl-1"></i><i class="cl-2"></i><i class="cl-3"></i>简单</p>
+            </a>
+        </li><li>
+            <a href="/Cookbook/detail/cookbook_id/717/recommend_id/505,377,287#keyStr=cooklist-list-d47">
+                <img src="http://i2.chunboimg.com/group1/M00/01/CE/Cv4IdVV2U3GADONpAAKs7AKBPtw027_530_350.jpg" alt="">
+                <h4>长寿鱼绒粥</h4>
+                <p class="sub">来自南极深海的珍味粥</p>
+                <p class="cook-level cook-level-1 "><i class="cl-1"></i><i class="cl-2"></i><i class="cl-3"></i>简单</p>
+            </a>
+        </li><li>
+            <a href="/Cookbook/detail/cookbook_id/715/recommend_id/,,#keyStr=cooklist-list-d48">
+                <img src="http://i2.chunboimg.com/group1/M00/01/80/Cv4IbFVa-n2Ab1MpAAOSA9mVYvY537_530_350.jpg" alt="">
+                <h4>芹菜炒牛肉</h4>
+                <p class="sub">牛肉滑嫩芹菜味美</p>
+                <p class="cook-level cook-level-1 "><i class="cl-1"></i><i class="cl-2"></i><i class="cl-3"></i>简单</p>
+            </a>
+        </li><li>
+            <a href="/Cookbook/detail/cookbook_id/653/recommend_id/645,267,635#keyStr=cooklist-list-d49">
+                <img src="http://i2.chunboimg.com/group1/M00/00/90/Cv4IbFTdtWGAZzvCAAOno-4jR-A993_530_350.jpg" alt="">
+                <h4>青芥多春鱼</h4>
+                <p class="sub">咬一口多子多福多美味</p>
+                <p class="cook-level cook-level-2 "><i class="cl-1"></i><i class="cl-2"></i><i class="cl-3"></i>中等难度</p>
+            </a>
+        </li><li>
+            <a href="/Cookbook/detail/cookbook_id/647/recommend_id/379,275,585#keyStr=cooklist-list-d50">
+                <img src="http://i2.chunboimg.com/group1/M00/00/7D/Cv4IbFTZl4SANncwAANgdfFPeXg469_530_350.jpg" alt="">
+                <h4>迷迭香烤羊排</h4>
+                <p class="sub">迷魂入味，搞定你挑剔的嘴巴</p>
+                <p class="cook-level cook-level-2 "><i class="cl-1"></i><i class="cl-2"></i><i class="cl-3"></i>中等难度</p>
+            </a>
+        </li><li>
+            <a href="/Cookbook/detail/cookbook_id/645/recommend_id/387,567,661#keyStr=cooklist-list-d51">
+                <img src="http://i3.chunboimg.com/group1/M00/00/7D/Cv4IbFTZd5iAQLTzAAMBvZ2TnOM303_530_350.jpg" alt="">
+                <h4>英式炸鳕鱼</h4>
+                <p class="sub">Fish &amp; Chips！</p>
+                <p class="cook-level cook-level-1 "><i class="cl-1"></i><i class="cl-2"></i><i class="cl-3"></i>简单</p>
+            </a>
+        </li><li>
+            <a href="/Cookbook/detail/cookbook_id/635/recommend_id/663,371,661#keyStr=cooklist-list-d52">
+                <img src="http://i2.chunboimg.com/group1/M00/00/6E/Cv4IbFTQlVOAQqGWAAMrRRhrwKk371_530_350.jpg" alt="">
+                <h4>橄榄油脆皮三文鱼</h4>
+                <p class="sub">三文鱼放大招，外酥里嫩煎来吃</p>
+                <p class="cook-level cook-level-2 "><i class="cl-1"></i><i class="cl-2"></i><i class="cl-3"></i>中等难度</p>
+            </a>
+        </li><li>
+            <a href="/Cookbook/detail/cookbook_id/631/recommend_id/655,547,477#keyStr=cooklist-list-d53">
+                <img src="http://i2.chunboimg.com/group1/M00/00/6A/Cv4IdVTPSVeAdeEXAARS_PXKkzY591_530_350.jpg" alt="">
+                <h4>番茄海鲜意大利面</h4>
+                <p class="sub">意大利面的经典做法之一</p>
+                <p class="cook-level cook-level-2 "><i class="cl-1"></i><i class="cl-2"></i><i class="cl-3"></i>中等难度</p>
+            </a>
+        </li><li>
+            <a href="/Cookbook/detail/cookbook_id/605/recommend_id/673,597,671#keyStr=cooklist-list-d54">
+                <img src="http://i2.chunboimg.com/group1/M00/00/4C/Cv4IdVTCIryACfuOAAOdNU1vAXQ200_530_350.jpg" alt="">
+                <h4>玉桂苹果卷</h4>
+                <p class="sub">常年位居甜品榜上位的就是它</p>
+                <p class="cook-level cook-level-2 "><i class="cl-1"></i><i class="cl-2"></i><i class="cl-3"></i>中等难度</p>
+            </a>
+        </li><li>
+            <a href="/Cookbook/detail/cookbook_id/585/recommend_id/647,397,275#keyStr=cooklist-list-d55">
+                <img src="http://i2.chunboimg.com/group1/M00/00/49/Cv4IbFS9_F6ADd1wAAP4hP8r0XA366_530_350.jpg" alt="">
+                <h4>百里香时蔬烩羊排</h4>
+                <p class="sub">香料打造的欧式风味羊排</p>
+                <p class="cook-level cook-level-2 "><i class="cl-1"></i><i class="cl-2"></i><i class="cl-3"></i>中等难度</p>
+            </a>
+        </li><li>
+            <a href="/Cookbook/detail/cookbook_id/523/recommend_id/645,387,567#keyStr=cooklist-list-d56">
+                <img src="http://i3.chunboimg.com/group1/M00/00/41/Cv4IbFS3iMyAP9cyAAOV2MzxuWs766_530_350.jpg" alt="">
+                <h4>酸甜烤鱼</h4>
+                <p class="sub">美味到不想与人分享的银鳕鱼</p>
+                <p class="cook-level cook-level-2 "><i class="cl-1"></i><i class="cl-2"></i><i class="cl-3"></i>中等难度</p>
+            </a>
+        </li><li>
+            <a href="/Cookbook/detail/cookbook_id/521/recommend_id/305,535,317#keyStr=cooklist-list-d57">
+                <img src="http://i2.chunboimg.com/group1/M00/00/41/Cv4IbFS3h3yAFvwtAAOc9OyHyBE246_530_350.jpg" alt="">
+                <h4>爽脆双色菜花</h4>
+                <p class="sub">颜色多多的菜花聚会</p>
+                <p class="cook-level cook-level-1 "><i class="cl-1"></i><i class="cl-2"></i><i class="cl-3"></i>简单</p>
+            </a>
+        </li><li>
+            <a href="/Cookbook/detail/cookbook_id/497/recommend_id/385,385,385#keyStr=cooklist-list-d58">
+                <img src="http://i2.chunboimg.com/group1/M00/00/36/Cv4IbFSzzFqAM-BUAARkBaLhqq4405_530_350.jpg" alt="">
+                <h4>五香盐焗基围虾</h4>
+                <p class="sub">战利品是烤虾的桌前争夺战</p>
+                <p class="cook-level cook-level-1 "><i class="cl-1"></i><i class="cl-2"></i><i class="cl-3"></i>简单</p>
+            </a>
+        </li><li>
+            <a href="/Cookbook/detail/cookbook_id/495/recommend_id/641,579,561#keyStr=cooklist-list-d59">
+                <img src="http://i2.chunboimg.com/group1/M00/00/36/Cv4IdVSzyBuARTLTAAOI_tHavys958_530_350.jpg" alt="">
+                <h4>沙爹鸡肉串</h4>
+                <p class="sub">南洋特色鸡肉串</p>
+                <p class="cook-level cook-level-2 "><i class="cl-1"></i><i class="cl-2"></i><i class="cl-3"></i>中等难度</p>
+            </a>
+        </li><li>
+            <a href="/Cookbook/detail/cookbook_id/493/recommend_id/577,397,647#keyStr=cooklist-list-d60">
+                <img src="http://i2.chunboimg.com/group1/M00/00/35/Cv4IdVSzt_WAcoV3AAQHAp5Q66Y527_530_350.jpg" alt="">
+                <h4>迷迭香草烤整鸡</h4>
+                <p class="sub">童话森林迷迭香烤鸡</p>
+                <p class="cook-level cook-level-2 "><i class="cl-1"></i><i class="cl-2"></i><i class="cl-3"></i>中等难度</p>
+            </a>
+        </li>    </ul>
+</div>
+
+    <footer>
+    <div class="footer-tool">
+        <a href="/Member/index.html">182050...</a><span>|</span><a href="/Login/logout.html">退出</a><a href="" class="toTop">回到顶部</a>
+            </div>
+    <a href="#" class="on sel changeSystem" value="1">触屏版</a>|<a href="#" class="changeSystem" value="2">电脑版</a>
+    
+</footer>
+
+<input type="hidden" name="changeSystem" id="changeSystem_url" value="/Base/changeSystem.html">
+<input type="hidden" name="andriod_app_download_version" id="andriod_app_download_version" value="ChunBoMall_1.5.4.apk">
+<script type="text/javascript" src="js/m/common.js"></script>
+<script src="js/stats.js"></script>
+
+    
+   
+
+    <script>
+        //默认选中状态
+        $(".www_nav").find("li").eq(2).addClass("on");
+    </script>
+</body></html>

@@ -1,0 +1,60 @@
+/*
+	登录、注册、找回密码、开仓登记页面样式
+*/
+input[type="text"],input[type="password"]{
+	font-size: .14rem;border: 1px solid #DDD;line-height: .4rem;padding: 0 .1rem;margin-bottom: .15rem;
+	-webkit-box-sizing: border-box;
+			box-sizing: border-box;
+}
+textarea{height: 90px; font-size: 14px;}
+.login-tab{
+	height: .5rem;background: #F8F8F8;white-space: nowrap;font-size: 0;
+}
+.login-tab a{
+	position: relative;display: inline-block;width: 50%;text-align: center;font-size: .14rem;line-height: .5rem;
+}
+.login-tab .sel{
+	color: #2BBC6A;
+}
+.login-tab a:first-child:before{
+	content: "";position: absolute;top: .1rem;bottom: .1rem;right: 0;width: 1px;background: #DDD;
+}
+.login-tab .sel:after{
+	content: "";position: absolute;width: 60%;bottom: 0;left: 0;right: 0;margin: auto;
+	height: 2px;background: #2BBC6A;
+}
+.login-wrap{
+	padding: .2rem 7.8125%;
+}
+.login-btn{
+	display: block;height: .4rem;line-height: .4rem;text-align: center;color: #FFF;
+	background: #2BBC6A;border-radius: 2px;font-size: .15rem;margin-bottom: .15rem;
+}
+.login-tip{margin-bottom: .7rem;font-size: .14rem;color: #999;line-height: 1;}
+.login-tip a{
+	text-decoration: underline;color: #999;line-height: 1;font-size: .14rem;
+}
+.login-tip .special{color: #2BBC6A;text-decoration: underline;}
+.login-title{font-size: .14rem;margin-bottom: .2rem;}
+.login-list{text-align: center;font-size: 0;}
+.login-list li{
+	display: inline-block;margin: 0 .25rem;text-align: center;
+}
+.login-list img{display: block;width: .4rem;height: .4rem;margin: 0 auto;margin-bottom: .08rem;}
+.login-list a{color: #666;font-size: .12rem;}
+
+.send-msg{
+	float: right;margin-left: .1rem;font-size: .14rem;line-height: .4rem;
+	background: #fff;border: 1px solid #2BBC6A;color: #2BBC6A;border-radius: 2px;padding: 0 .1rem;
+}
+.code-wrap{overflow: hidden;}
+
+body.bg-fff{background:#fff;}
+.invite-tip-warning{border:1px solid #ccd5dc;border-radius:2px;background:#f3f5f7;margin-bottom:.15rem;padding:.09rem 0 .09rem .32rem;}
+.invite-tip-warning i{width:.2rem;height:.2rem;float:left;margin-left:-.25rem;background:url(/Public/images/tip-warning.gif) no-repeat;background-size:contain;}
+.invite-tip-warning h5{font-size:.135rem;color:#6b94b7;margin-bottom:.03rem;}
+.invite-tip-warning p{font-size:.11rem;color:#666;}
+
+
+/*开仓登记*/
+.regs-wrap{padding: .25rem;}

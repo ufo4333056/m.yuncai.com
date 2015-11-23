@@ -1,0 +1,131 @@
+<!doctype html><html lang="zh"><head>
+        <meta charset="UTF-8">
+        <title>购物车</title>
+        <meta name="viewport" content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0,user-scalable=no">
+        <link rel="stylesheet" href="css/m/common.css" type="text/css" media="screen">
+        <link rel="stylesheet" href="css/m/cart.css" type="text/css" media="screen">
+        <link rel="stylesheet" href="css/m/address.css" type="text/css" media="screen">
+        <link rel="stylesheet" href="css/main.css" type="text/css">
+        <script src="js/common.js" type="text/javascript" charset="utf-8"></script>
+        <script src="js/m/cart/cart.js" type="text/javascript" charset="utf-8"></script>
+        <!-- <script src="js/header.js" type="text/javascript" charset="utf-8"></script> -->
+    </head>
+    <body onload="loaded()" class="">
+    <link rel="stylesheet" href="css/main.css" type="text/css" media="screen">
+<header><a href="http://chunbo.com/Index/index.html" class="back"></a><h1>购物车</h1>
+        <a href="javascript:void(0);" onclick="javascript:void(0);" id="cartEdit" class="link-right">编辑</a>
+</header>
+
+    <nav>
+    <ul class="www_nav">
+        <li><a href="/"><i class="nav-0"></i>首页</a></li>
+        <li><a href="/list/main"><i class="nav-1"></i>分类</a></li>
+        <li><a href="/Cookbook"><i class="nav-2"></i>菜谱</a></li>
+        <li class="on"><a href="/cart/"><i class="nav-3"></i>购物车<i class="num" id="AppCartNums">1</i></a></li>
+        <li><a href="/member/"><i class="nav-4"></i>我的见食</a></li>
+    </ul>
+</nav>
+    <div id="cart_div_html">    <div class="login-tips">
+            <a href="/Login/index.html" class="btn-red-d fr" id="login" onclick="return showLogin(this);" cbclick="5-2">登录</a>
+            登录后可同步电脑与手机购物车中的商品
+        </div>    <div class="address-cart"><img src="/Public/images/m/place.png" height="20" alt="地点"><span class="text" id="address-text">北京&gt;西城区&gt;西城区*</span><div class="right-arr"></div>
+        <input type="hidden" name="city" id="address_city" value="110100">
+        <input type="hidden" name="district" id="address_district" value="110102">
+        <input type="hidden" name="street" id="address_street" value="110102-001">
+    </div>
+    <ul class="collect-list">
+        <!--当前区域可配送的列表-->
+        <li class="line-bottom collect-del has-tags" value="8711">
+                                    <i class="m_product_select icon-col-del"></i>                <div class="collect-img"><a href="/Product/8711#keyStr=cart-cartlist-d" target="_blank"><img src="http://i3.chunboimg.com/group1/M00/01/F0/Cv4IbFWCX-OAJgFFAAfYQx4MFl0324_100_100.jpg" alt=""></a></div>
+                <h5><a href="/Product/8711#keyStr=cart-cartlist-d" target="_blank">法国精制猪肋排1000g</a></h5>
+                                <div class="collect-price">
+                    <div class="copies">
+                        <a href="javascript:;" class="m_SubtractNum"><i class="icon-minus"></i></a>
+                        <input type="text" value="1" class="m_changeNum" name="pro_num" id="product_num_8711">
+                        <a href="javascript:;" class="m_addNum"><i class="icon-plus"></i></a>
+                        <input type="hidden" id="one_product_stock_8711" value="">
+                        <input type="hidden" name="product_id" value="8711">
+                    </div>
+                    ¥ <span class="one_product_total_price">39.9</span>
+                                            <span class="tag-price">限时抢购</span>                                    </div>
+                <a href="javascript:void(0)" class="remove-cart" onclick="javascript:deleteCartProduct(8711);">删除</a>
+                <!--<input type="hidden" id="one_product_stock_8711" value="" />-->
+                </li>                <input type="hidden" value="/Cart/changeNum.html" name="changenum_url" id="changenum_url">
+        </ul>
+        <!--购物袋-->
+        <div class="shopping-bag collect-list" style="display:none;">
+    <div id="shopping-bag-act" class="shopping-bag-act">
+        <i></i> 订单送到办公室？您或许需要一个购物袋！<i class="icon-arr"></i>
+    </div>
+    <div class="shopping-bag-info collect-del">
+        <i class="shopping-bag-select icon-unchecked"></i>
+        <div class="collect-img">
+            <a href="/Product/7545" class="img" target="_blank"><img src="http://i2.chunboimg.com/group1/M00/01/02/Cv4IdVUnrLKAJZxEAAfpMYmqtLY936_100_100.jpg" alt=""></a>
+        </div>
+        <h5><a href="/Product/7545" target="_blank">见食购物袋</a></h5>
+        <p class="sub">尺寸：40cm × 40cm</p>
+        <div class="collect-price"><span class="one_product_total_price">¥ 2.00</span>
+            <div class="copies" name="shop_bag">
+                <a href="javascript:;" class="m_SubtractNum"><i class="icon-minus"></i></a>
+                <input type="text" value="1" class="m_changeNum" name="pro_num" id="product_num_7545">
+                <a href="javascript:;" class="m_addNum"><i class="icon-plus"></i></a>
+                <input type="hidden" name="product_id" value="7545">
+                <input type="hidden" id="one_product_stock_7545" value="0">
+            </div>
+        </div>      
+    </div>
+</div> 
+        <div class="cart-tip">
+            见食已为您所购的全部商品进行了<b>安心检测</b>，您可以通过订单及短信等<b>查询检测报告</b>。见食为您和家人的健康保驾护航。
+            <a href="#" class="close">×</a>
+        </div>
+        <div id="select-act" class="select-buy">
+            <a href="javascript:;" class="collect-all" id="selectAll" flag="1"><i></i>全选</a>
+            <a href="/Cart/del.html" class="btn-edit btn-red-d fr select-act-edit" id="delCartAll">删除</a>
+            <a href="javascript:;" class="btn-edit btn-gray fr select-act-edit" id="collectCartAll" cbclick="5-8">移入心愿单</a>
+            <span class="select-price">合计：<strong id="totalPrice">¥39.90</strong></span>
+
+            <a href="/Cart/settlement" id="m_settlement" class="btn-confirm btn-red fr" cbclick="5-6">去结算(1)</a>
+        </div>
+        <input type="hidden" name="CartTotalNum" value="1" id="CartTotalNum"></div>
+    <input type="hidden" name="add_favorite_pid" id="add_favorite_pid" value="">
+    <input type="hidden" name="is_favorite" id="is_favorite" value="0">
+    <input type="hidden" name="member_id" id="member_id" value="">
+    <input type="hidden" name="getPriceURl" id="getPriceURl" value="/Cart/getPrice.html">
+    <input type="hidden" name="add_cart" id="add_cart" value="/Cart/add.html">
+    <input type="hidden" name="getCartProduct" id="getCartProduct_url" value="/Cart/getCartProduct.html">
+    <input type="hidden" name="refresh_url" id="refresh_url" value="/Cart/refresh.html">
+    <input type="hidden" name="favorite_url" id="favorite_url" value="/Cart/favorite.html">
+    <input type="hidden" name="moreProductChangeNum_url" id="moreProductChangeNum_url" value="/Cart/moreChangeNum.html">
+    <input type="hidden" name="changeProductNum_url" id="changeProductNum_url" value="/Cart/changeNum.html">
+    <input type="hidden" name="isCartPageM" id="isCartPageM" value="1">
+
+
+    <div class="select-con">
+        <div class="select-title"><div class="select-back hide"></div>选择配送地区<div class="close">×</div></div>
+        <div class="select-wrapper" id="select-wrapper">
+            <div id="select-scroller" style="transition-timing-function: cubic-bezier(0.1, 0.57, 0.1, 1); transition-duration: 0ms; transform: translate(0px, 0px) translateZ(0px);">
+                <ul>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="mask-bg"></div>
+    <script type="text/javascript" src="js/common.js"></script>
+    <script type="text/javascript" src="js/iscroll.js"></script>
+    <script type="text/javascript" src="http://www.chunbo.com/SyncAddr/getDeliveryAddress"></script>
+    <script type="text/javascript" src="js/common/Map.js"></script>
+    <script type="text/javascript">
+        var myScroll;
+        function loaded() {
+            myScroll = new IScroll('#select-wrapper', {mouseWheel: true, tap: true, click: true});
+            if(!$(".collect-list").length){
+                $("#cartEdit").attr("style","display:none");
+            }   
+        }
+
+    </script>
+    <script type="text/javascript">$(function () { $(".www_nav").find("li").eq(3).addClass("on"); });</script>
+    <script src="js/stats.js" type="text/javascript" charset="utf-8"></script>
+
+</body></html>

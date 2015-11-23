@@ -1,0 +1,366 @@
+<!doctype html><html><head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0,user-scalable=no">
+            <title>见食</title>
+            <link rel="stylesheet" href="css/main.css" type="text/css" media="screen">
+            <script type="text/javascript" src="js/iscroll.js"></script>
+
+            
+                <link rel="stylesheet" type="text/css" href="">
+                <link rel="stylesheet" type="text/css" href="">
+            
+
+            
+                <script language="javaScript" src=""></script>
+                <script language="javascript" src=""></script>
+            
+
+             
+             
+    </head>
+
+    <body class="navFixed">
+         
+        
+        <script src="js/common.js"></script>
+<header class="category-header">
+    <a href="javascript:{window.history.back();}" class="back"></a><a href="#" class="search-cancel">取消</a><input type="text" class="search" placeholder="搜索见食商品" id="search_key"><a href="javascript:void(0);" class="search-act">搜索</a>
+</header>
+<div class="search-res">
+    <h5>最近搜索</h5>
+    <ul></ul>
+    <p class="del-search-key"><a href="#">删除搜索记录<i class="del">×</i></a></p>
+</div>
+<script>
+    $(function () {
+        //搜索按钮
+        $('#search_key').on('focus',function(){
+            $(this).addClass('search-focus');
+            search.act();
+            search.get();
+        }).on('blur',function(){
+            $(this).removeClass('search-focus');
+        });
+        var search = {
+            'act':function(){
+                $('.search-cancel,.search-res,.search-act').show();
+                $('.back').hide();
+                $('body').addClass('disableScorll');
+                if ($("#category_level").val() > 1) {
+                    $("#filter_div").hide();
+                }
+                $('.search-cancel').on('click',function(e){
+                    e.preventDefault();
+                    $('#search_key').val('');
+                    $('.search-cancel,.search-res,.search-act').hide();
+                    $('.back').show();
+                    $('body').removeClass('disableScorll');
+                    if ($("#category_level").val() > 1) {
+                        $("#filter_div").show();
+                    }
+                });
+            },
+            'word':localStorage.searchWord?localStorage.searchWord.split(",") : [],
+            'set':function(w){
+                if(w){
+                    for (var i = 0; i < this.word.length; i++) {
+                        if(w == this.word[i]){
+                            this.word.splice(i, 1);
+                        }
+                    };
+                    this.word.push(w);
+                    localStorage.searchWord = this.word;
+                    // $('.search').val('');
+                }
+            },
+            'get':function(){
+                var $searchResUl = $('.search-res ul');
+                var num = 6; //显示个数
+                $searchResUl.html('');
+                if(this.word.length > 0){
+                    for (var i = 0; i < this.word.length; i++) {
+                        if(this.word.length < num || this.word.length - i <= num){
+                            $searchResUl.prepend('<li>'+this.word[i]+'</li>')
+                        }
+                    };
+                    $searchResUl.find('li').on('tap',function(){
+                        search.set($(this).text());
+                        goto_search($(this).text());
+                    });
+                }else{
+                    this.empty();
+                }
+            },
+            'del':function(){
+                localStorage.searchWord = [];
+                this.word = [];
+                this.get();
+            },
+            'empty':function(){
+                if(this.word.length == 0){
+                    $('.search-res ul').append('<li class="empty">您还没有搜索记录</li>');
+                    $('.del-search-key').hide();
+                }
+            }
+        }
+        // search.get();
+        $('.search-act').on('tap',function(e){
+            e.preventDefault();
+            goto_search();
+            search.set($('#search_key').val());
+        });
+        $('.del-search-key a').on('tap',function(e){
+            e.preventDefault();
+            search.del();
+        });
+        $('.search-act-icon').on('tap',function(e){
+            e.preventDefault();
+            $('#search_key').show().focus();
+            $('.search-act-icon').hide();
+			$("#site_area").hide();
+            $('.search-cancel').on('tap',function(e){
+                e.preventDefault();
+                $('#search_key').hide();
+                $('.search-act-icon').show();
+				$("#site_area").show();
+            });
+        });
+
+        $("#search_key").on("keydown", function (e) {
+            var curKey = e.which;
+            if (curKey == 13) {
+                search.set($('#search_key').val());
+                // goto_search();
+            }
+        });
+
+        function goto_search(w) {
+            if (w || $("#search_key").val().length > 0) {
+                var search_key = w || $("#search_key").val();
+                location.href = "/Search/index?key=" + search_key;
+            }
+        }
+    });
+</script>
+        <nav>
+    <ul class="www_nav">
+        <li><a href="/"><i class="nav-0"></i>首页</a></li>
+        <li><a href="/list/main"><i class="nav-1"></i>分类</a></li>
+        <li><a href="/Cookbook"><i class="nav-2"></i>菜谱</a></li>
+        <li><a href="/cart/"><i class="nav-3"></i>购物车<i class="num" id="AppCartNums" style="transform-origin: 0px 0px 0px; opacity: 1; transform: scale(1, 1);">2</i></a></li>
+        <li><a href="/member/"><i class="nav-4"></i>我的见食</a></li>
+    </ul>
+</nav>
+    
+        
+        
+    <section class="detail-section detail-main">
+        <div class="slide" id="detail_slider" style="visibility: visible;">
+            <ul class="slide-img" style="width: 1152px;">
+                <li data-index="0" style="width: 384px; left: 0px; transition-duration: 0ms; transform: translate(384px, 0px) translateZ(0px);"><a href="#"><img src="http://i3.chunboimg.com/group1/M00/01/3D/Cv4IdVU_SCqAMZJzAAw1FSQrk9s332_500_500.jpg" alt=""></a></li><li data-index="1" style="width: 384px; left: -384px; transition-duration: 300ms; transform: translate(-384px, 0px) translateZ(0px);"><a href="#"><img src="http://i3.chunboimg.com/group1/M00/01/3E/Cv4IbFU_SDKAbnp3AApAO_nUngk078_500_500.jpg" alt=""></a></li><li data-index="2" style="width: 384px; left: -768px; transition-duration: 300ms; transform: translate(0px, 0px) translateZ(0px);"><a href="#"><img src="http://i3.chunboimg.com/group1/M00/00/5D/Cv4IbFTKGdOAP_PqAAbw9s9EIJY659_500_500.jpg" alt=""></a></li>            </ul>
+            <div class="slide-nav dot">
+                <i class=""></i>
+                                            <i class=""></i>                        <i class="cur"></i>            </div>
+        </div>
+        <h1>安心优选云南脆皮金桔500g</h1>
+        <p class="sub">香甜美味 品质保障</p>
+        <!--价格-->
+        <p class="price"><b>¥19.9</b></p>        <!--促销-->
+                    </section>
+    <section class="detail-section mb">
+        <!--商品同款-->
+        <div class="detail-size" id="product_style_list">
+        规格：<a data-p-option="5569" href="/product/5569" class="btn-mini on" title="500g ">500g </a>&nbsp;<a data-p-option="12809" href="/product/12809" class="btn-mini" title="500g ">500g </a>&nbsp;</div>
+        <!-- start赠品 -->
+                <!-- end赠品 -->
+        
+        <div class="detail-buy">
+            数量：<div class="copies">
+                <a class="icon-minus" id="down_p_count">-</a>
+                <input id="product_count" type="text" value="1">
+                <a class="icon-plus" id="up_p_count">+</a>
+            </div>
+            <a class="btn-red" id="add_cart" cbclick="4-7">加入购物车</a>
+
+                            <a id="now_buy" class="btn-red" style="display: none;" cbclick="4-7">加入购物车</a>
+            <a id="no_stock_div" class="btn-red btn-disable" style="display:none;">抢空了，马上回来</a>
+        </div>
+    </section>
+    <!--安心度 begin-->
+    <section class="detail-section mb anxin topborder">
+        见食安心度：
+                <a href="javascript:void(0)"><img src="http://i3.chunboimg.com/group1/M00/00/A1/Cv4IdVT1c1iAF_oaAAArTNg-7Ns051_110_110.jpg" data-img-list="http://i0.chunboimg.com/group1/M00/04/7C/Cv4IdVY8RvaAVlJWAAO53zm4TNM984.tmp;http://i0.chunboimg.com/group1/M00/04/7D/Cv4IbFY8RvaAfwIWAARw64Ft0kQ921.tmp;http://i1.chunboimg.com/group1/M00/04/7C/Cv4IdVY8RvaAKiqGAATy0o7O19E230.tmp;http://i0.chunboimg.com/group1/M00/04/7D/Cv4IbFY8RvaAGCShAATsKG7R0AQ966.tmp;http://i0.chunboimg.com/group1/M00/04/7C/Cv4IdVY8RvaAEVyKAAS31R-mMe4091.tmp"></a>        
+        <span class="an-tip">点击图标查看安心检测报告<i></i></span>    </section>
+<!--
+<section class="detail-section mb anxin1 topborder">
+	<h2>- 见食安心度 -</h2>
+	<ul class="switch-tab">
+            <li class="on tab-btn">
+                        			<img class="anxin-icon" src="http://i1.chunboimg.com/group1/M00/00/A1/Cv4IdVT1cUyAT7t4AAArTNg-7Ns176.jpg" alt="品控">
+			<p class="tab-desc">品控</p>
+			<i></i>
+                    </li>	</ul>
+	<ul class="switch-con topborder">
+            <li class="tab-con">
+			<ul>
+                            <li>
+                                    <img src="img/农残.png" alt="未超标">
+                                    <p class="con-desc">64项农残</p>
+                                    <p class="c-green">未超标</p>
+                                </li>			</ul>
+			<div class="btn-green-border mt30" data-img-list="http://i0.chunboimg.com/group1/M00/04/7C/Cv4IdVY8RvaAVlJWAAO53zm4TNM984.tmp;http://i0.chunboimg.com/group1/M00/04/7D/Cv4IbFY8RvaAfwIWAARw64Ft0kQ921.tmp;http://i1.chunboimg.com/group1/M00/04/7C/Cv4IdVY8RvaAKiqGAATy0o7O19E230.tmp;http://i0.chunboimg.com/group1/M00/04/7D/Cv4IbFY8RvaAGCShAATsKG7R0AQ966.tmp;http://i0.chunboimg.com/group1/M00/04/7C/Cv4IdVY8RvaAEVyKAAS31R-mMe4091.tmp">查看检测报告</div>
+                    </li>
+                    	</ul>
+    </section>-->
+<!---安心度 end--->
+    <section class="detail-section mb topborder">
+        <h2>- 买手推荐 -</h2>
+            <p class="recommend-text"><span>别的水果都削皮吃肉，只有金桔讲究吃皮。它们有着圆滚滚又色泽金黄的外观，长相很萌，入口后味道比柑橘更加刺激，有一点微辣，为什么居然连皮一块吃，因为可以预防色素沉淀，让皮肤光亮而有弹性，延迟衰老。当金桔被暴晒成干制成蜜饯，变成了开胃的小惊喜，还能化痰，功能绝对不可小觑。</span></p>
+
+        <a href="#" class="detail-showmore-act topborder" style="display: none;">
+            <h3>产品详情<small>(建议在WiFi环境下打开)</small></h3>
+            <p class="sub">图文展示产品优点、营养成分及食用方法</p>
+            <i class="more"></i>
+        </a>
+        <div class="detail-info-more topborder" style="display: block; transform-origin: 0px 0px 0px; opacity: 1; transform: scale(1, 1);">
+            <h2>- 我的优点 -</h2>
+            <div class="detail-info-box">
+                <ul class="detail-info-pop">
+                    <li><span></span>预防色素沉淀，增进皮肤光泽与弹性，减缓衰老，避免肌肤松弛生皱。</li>                                                        </ul>
+
+<!--                <img src="http://i1.chunboimg.com/group1/M00/00/ED/Cv4IdVUfimKAUYgeAAgaGYnTQ6w746.jpg" alt="">-->
+                <img id="about_shicai_pic1" src="http://i1.chunboimg.com/group1/M00/00/ED/Cv4IdVUfimKAUYgeAAgaGYnTQ6w746.jpg" alt="">
+                                                            
+            </div>
+            <hr>
+                <h2>- 我的详情 -</h2>
+                <div class="detail-info-box">
+                    <table>
+                        <tbody><tr>
+                            <th width="30%">品牌</th>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <th>规格</th>
+                            <td>500g</td>
+                        </tr>
+                                                <tr>
+                            <th>产地</th>
+                            <td>大理白族自治州</td>
+                        </tr>
+                        <tr class="bg-gray">
+                            <th>储存办法</th>
+                            <td>冰箱冷藏保存，0-4℃最佳</td>
+                        </tr>
+                    </tbody></table>
+                </div>                    </div>
+            </section>
+    <!-- <section class="detail-section comment-list topborder"> -->
+    <section class="common-section detail-section comment-list topborder mb">
+            <h2>- 商品评论 -</h2>
+            <p class="sub">好评度<b>100%</b> 46人评论</p>
+            <ul>
+                <li class="comment">
+                        <div class="comment-header">
+                            <small>2015-09-08 加入</small>
+                            <img src="/Public/images/avatar.png" alt="">
+                            Timo妈咪                        </div>
+                        <p class="comment-content"><i class="i-comment i-comment-3"></i>
+                            见食的品质和服务都非常非常的满意，特别贴心的一点是胶带封口那里都会有一点点留出来，让人拆包装的时候非常方便。                        </p>
+
+                                                            <small class="comment-date">
+                        2015-11-11 13:38:47                    </small>
+                    </li><li class="comment">
+                        <div class="comment-header">
+                            <small>2015-10-29 加入</small>
+                            <img src="/Public/images/avatar.png" alt="">
+                            136*****950                        </div>
+                        <p class="comment-content"><i class="i-comment i-comment-2"></i>
+                            木有想象的好吃，不涩但也不甜，只能说不难吃，不知菜市场的价格，感觉这个价格贵了。包装盒很好，太浪费，不环保。买了5样，3个纸箱。                        </p>
+
+                    <div class="img-con">
+                            <img src="http://i2.chunboimg.com/group1/M00/04/81/Cv4IbFY9Y3GAAgh_AABbYTW9588810_200_200.jpg" alt="">                        </div>                                        <small class="comment-date">
+                        2015-11-07 10:38:47                    </small>
+                    </li><li class="comment">
+                        <div class="comment-header">
+                            <small>2015-01-26 加入</small>
+                            <img src="http://i3.chunboimg.com/group1/M00/02/17/Cv4IbFWRD3yAHAJOAAB4bjS5xvM691_40_40.jpg" alt="">
+                            VIP会员熊猫君٩̋(๑˃́ꇴ˂̀๑)                        </div>
+                        <p class="comment-content"><i class="i-comment i-comment-3"></i>
+                            酸甜可口，个个质量都好。                        </p>
+
+                                                            <small class="comment-date">
+                        2015-11-09 22:18:27                    </small>
+                    </li>            </ul>
+            <div class="button-row">
+                <a href="/product/good_comment.html?id=5569" class="btn-green-border" target="_self">查看全部</a>
+            </div>
+        </section>
+    <!-- </section> -->
+    
+    <div class="imgView" style="display:none;">
+        <h3>检测报告</h3>
+        <ul></ul>
+        <a href="#" class="close">×</a>
+    </div>
+
+    <div class="wx-share-layer" style="display:none;"></div>
+
+    <footer>
+    <div class="footer-tool">
+        <a href="/Member/index.html">182050...</a><span>|</span><a href="/Login/logout.html">退出</a><a href="" class="toTop">回到顶部</a>
+            </div>
+    <a href="#" class="on sel changeSystem" value="1">触屏版</a>|<a href="#" class="changeSystem" value="2">电脑版</a>
+    
+</footer>
+
+<input type="hidden" name="changeSystem" id="changeSystem_url" value="/Base/changeSystem.html">
+<input type="hidden" name="andriod_app_download_version" id="andriod_app_download_version" value="ChunBoMall_1.5.4.apk">
+<script type="text/javascript" src="js/m/common.js"></script>
+<script src="js/stats.js"></script>
+
+        
+    <input type="hidden" id="product_id" value="5569">
+    <input type="hidden" id="category_id" value="639">
+    <input type="hidden" id="product_url" value="/product/{0}">
+    <input type="hidden" id="product_image_prefix" value="http://i0.chunboimg.com/">
+    <input type="hidden" id="sku_code" value="1000220">
+    <input type="hidden" id="stock_count" value="20">
+    <input type="hidden" id="is_fresh_promo" value="0">
+    <input type="hidden" id="is_pre_sale" value="0">
+    <input type="hidden" id="is_limit_time" value="0">
+    <input type="hidden" id="fresh_start_time" value="">
+    <input type="hidden" id="pre_start_time" value="">
+    <input type="hidden" id="rtype" value="">
+    <input type="hidden" id="product_subname" value="香甜美味 品质保障">
+    <input type="hidden" id="product_name" value="安心优选云南脆皮金桔500g">
+    <input type="hidden" id="chunbo_price" value="19.90">
+    <input type="hidden" id="specifications" value="500g">
+    <input type="hidden" id="promotion_sale_end_time" value="">
+    <input type="hidden" id="sale_price" value="">
+    <input type="hidden" id="trackid" value="">
+
+        
+    
+
+    
+    <script src="js/product/product.js" type="text/javascript"></script>
+    <script src="js/common/common.js" type="text/javascript"></script>
+    <script src="js/common/string_helper.js" type="text/javascript"></script>
+    <script src="js/detail.js" type="text/javascript"></script>
+
+    <script>
+        $(function () {
+        var product_id = $("#product_id").val();
+                //取得同款商品
+                window.Product.getProductRelationByPid_m(product_id);
+                //绑定事件
+                window.Product.bindClickEvent_m();
+                //检查库存
+                window.Product.checkProductStock_m();
+                //载入购物车
+                window.Product.getCartListByProduct_m();
+        });    </script>
+
+    
+</body></html>
